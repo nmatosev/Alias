@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".SettingsActivity"
+    android:orientation="vertical"
+    >
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Trajanje runde: "
+        android:textColor="#000"
+        android:textStyle="bold"
+        android:layout_margin="15dp"
+        android:textSize="20sp"
+        android:id="@+id/round_duration"/>
+
+    <EditText
+        android:id="@+id/round_duration_edit_text"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:ems="10"
+        android:layout_margin="15dp"
+        android:inputType="number"
+        android:text="60" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Bodova za pobjedu: "
+        android:textColor="#000"
+        android:textStyle="bold"
+        android:layout_margin="15dp"
+        android:textSize="20sp"
+        android:id="@+id/score_to_win"/>
+
+    <EditText
+        android:id="@+id/score_to_win_edit_text"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:ems="10"
+        android:layout_margin="15dp"
+        android:inputType="number"
+        android:text="60" />
+
+    <Button
+        android:id="@+id/button_save"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="15dp"
+        android:text="Spremi" />
+
+</LinearLayout>
+
