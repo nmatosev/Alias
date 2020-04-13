@@ -32,7 +32,7 @@ import java.util.regex.Pattern;
 
 public class GameplayActivity extends AppCompatActivity {
 
-    private static final String TAG ="GameplayActivity";
+    private static final String TAG = "GameplayActivity";
     DatabaseHelper databaseHelper;
     Button startButton;
     TextView countDownTextView;
@@ -64,13 +64,12 @@ public class GameplayActivity extends AppCompatActivity {
 
         Collections.shuffle(words);
         SharedPreferences settingsPreferences = getSharedPreferences("settings_prefs", MODE_PRIVATE);
-        SharedPreferences.Editor editor  = getSharedPreferences("score_prefs", MODE_PRIVATE).edit();
+        SharedPreferences.Editor editor = getSharedPreferences("score_prefs", MODE_PRIVATE).edit();
         editor.putInt("score", scoreCounter);
         editor.apply();
 
-
-        //roundDuration = settingsPreferences.getInt("roundDuration", 30);
-        roundDuration = 10;
+        roundDuration = settingsPreferences.getInt("roundDuration", 30);
+        //roundDuration = 10;
 
         readerTextView = (TextView) findViewById(R.id.reader_text_view);
         guesserTextView = (TextView) findViewById(R.id.text_view_guesser);
@@ -83,13 +82,12 @@ public class GameplayActivity extends AppCompatActivity {
 
 
         queue = CurrentGameEntity.getInstance().getTeamQueue();
-        List<Team> teams = CurrentGameEntity.getInstance().getTeams();
+        final List<Team> teams = CurrentGameEntity.getInstance().getTeams();
         String player1;
         String player2;
-        Team team = CurrentGameEntity.getInstance().getTeams().get(queue);
-        player1 =team.getPlayers().get(0);
-        player2 =team.getPlayers().get(1);
-
+        Team team = teams.get(queue);
+        player1 = team.getPlayers().get(0);
+        player2 = team.getPlayers().get(1);
 
 
         readerTextView.setText("Čita: " + player1);
@@ -105,31 +103,30 @@ public class GameplayActivity extends AppCompatActivity {
                 correctButton.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        wordTextView.setText(words.get(wordCounter));
-                        scoreCounter++;
-                        wordCounter++;
-                        showToastMsg("Bravooo!");
-                        Log.i("Current score", "Score " + scoreCounter + " word cnt " + wordCounter);
-                        scoreTextView.setText("Trenutni rezultat " + scoreCounter + " bodova");
-
+                        if (words.size() > wordCounter) {
+                            wordTextView.setText(words.get(wordCounter+=1));
+                            scoreCounter++;
+                            showToastMsg("Bravooo!");
+                            Log.i("Current score", "Score " + scoreCounter + " word cnt " + wordCounter);
+                            scoreTextView.setText("Trenutni rezultat " + scoreCounter + " bodova");
+                        }
                     }
                 });
 
                 passButton.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        wordTextView.setText(words.get(wordCounter));
-                        scoreCounter--;
-                        wordCounter++;
-                        showToastMsg(":(");
-                        scoreTextView.setText("Trenutni rezultat " + scoreCounter + " bodova");
-
+                        if (words.size() > wordCounter) {
+                            wordTextView.setText(words.get(wordCounter += 1));
+                            scoreCounter--;
+                            showToastMsg(":(");
+                            scoreTextView.setText("Trenutni rezultat " + scoreCounter + " bodova");
+                        }
                     }
                 });
 
 
-
-                new CountDownTimer(roundDuration*1000,1000) {
+                new CountDownTimer(roundDuration * 1000, 1000) {
                     int counter = roundDuration;
 
                     @Override
@@ -137,9 +134,14 @@ public class GameplayActivity extends AppCompatActivity {
                         countDownTextView.setText(String.valueOf(counter));
                         counter--;
                     }
+
                     @Override
                     public void onFinish() {
-                        CurrentGameEntity.getInstance().getTeams().get(queue).setCurrentScore(scoreCounter);
+                        int total = teams.get(queue).getCurrentScore() + scoreCounter;
+                        teams.get(queue).setCurrentScore(total);
+                        String player1 = teams.get(queue).getPlayers().get(0);
+                        teams.get(queue).getPlayers().remove(0);
+                        teams.get(queue).getPlayers().add(player1);
                         countDownTextView.setText("Gotova runda!");
                         startActivity(new Intent(GameplayActivity.this, CurrentScoreActivity.class));
                     }
@@ -148,7 +150,7 @@ public class GameplayActivity extends AppCompatActivity {
         });
     }
 
-    private void showToastMsg(String message){
+    private void showToastMsg(String message) {
         Toast.makeText(this, message, Toast.LENGTH_SHORT).show();
     }
 
@@ -179,12 +181,10 @@ public class GameplayActivity extends AppCompatActivity {
     /**
      * Helper method for dictionary file parsing
      */
-    private void parseDictionary(){
-        String patternDict = ".*\\/\">(\\S+).*";
-
+    private void parseDictionary() {
+        String patternDict = "(.+)";
 
         List<String> matchedWords = new ArrayList<>();
-        int num = 0;
         InputStream in = this.getClass().getClassLoader().getResourceAsStream("res/raw/bujica.txt");
 
         try {
@@ -194,39 +194,40 @@ public class GameplayActivity extends AppCompatActivity {
             Pattern pattern = Pattern.compile(patternDict);
 
             while ((st = br.readLine()) != null) {
+                Log.i("line ", st.trim());
 
                 Matcher matcher = pattern.matcher(st.trim());
                 if (matcher.matches()) {
-                    Log.i("line", st.trim());
-
+                    //Log.i("line M", st.trim());
                     String matched = matcher.group(1);
                     matchedWords.add(matched);
                 }
 
+
+                Log.i("mtc size", ""+matchedWords.size());
+                Log.i("fls", matchedWords.toString());
+
+                int cnt = 0;
+                List<String> first = new ArrayList<>();
+                List<String> sc = new ArrayList<>();
+                List<String> thr = new ArrayList<>();
+
+                for(String wr : matchedWords){
+                    if(cnt<400){
+                        first.add(wr);
+                    } else if(cnt >= 400 && cnt <= 800){
+                        sc.add(wr);
+                    } else if(cnt>800){
+                        thr.add(wr);
+                    }
+                    cnt++;
+                }
+                Log.i("fr", first.toString());
+                Log.i("sc", sc.toString());
+                Log.i("th", thr.toString());
             }
-        } catch (Exception e){
+        } catch (Exception e) {
             e.printStackTrace();
         }
-        Log.i("mtc size", ""+matchedWords.size());
-        Log.i("fls", matchedWords.toString());
-
-        int cnt = 0;
-        List<String> first = new ArrayList<>();
-        List<String> sc = new ArrayList<>();
-        List<String> thr = new ArrayList<>();
-
-        for(String wr : matchedWords){
-            if(cnt<400){
-                first.add(wr);
-            } else if(cnt >= 400 && cnt <= 800){
-                sc.add(wr);
-            } else if(cnt>800){
-                thr.add(wr);
-            }
-            cnt++;
-        }
-        Log.i("fr", first.toString());
-        Log.i("sc", sc.toString());
-        Log.i("th", thr.toString());
     }
 }

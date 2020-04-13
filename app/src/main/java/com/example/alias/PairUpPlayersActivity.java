@@ -119,8 +119,8 @@ public class PairUpPlayersActivity extends AppCompatActivity {
 
                     playersAdapter.notifyDataSetChanged();
                     teamsAdapter.notifyDataSetChanged();
-
-                    Team team = new Team(joined.get(0), joined.get(1));
+                    String teamName = joined.get(0)+"&"+joined.get(1);
+                    Team team = new Team(joined.get(0), joined.get(1), teamName);
                     CurrentGameEntity.getInstance().getTeams().add(team);
 
                     finish();
@@ -143,7 +143,8 @@ public class PairUpPlayersActivity extends AppCompatActivity {
 
     private void fillPlayerList(Cursor table, List<String> list, String entity) {
         if(table.getCount()==0){
-            Toast.makeText(this, entity + " table was empty!", Toast.LENGTH_SHORT).show();
+            //Toast.makeText(this, entity + " table was empty!", Toast.LENGTH_SHORT).show();
+            Log.d("Players", "No players in DB");
         } else{
             while (table.moveToNext()){
                 list.add(table.getString(1));
@@ -153,13 +154,14 @@ public class PairUpPlayersActivity extends AppCompatActivity {
 
     private void fillTeamList(Cursor table, List<String> list, String entity) {
         if(table.getCount()==0){
-            Toast.makeText(this, entity + " table was empty!", Toast.LENGTH_SHORT).show();
+            //Toast.makeText(this, entity + " table was empty!", Toast.LENGTH_SHORT).show();
+            Log.d("Teams", "No teams in DB");
         } else{
             while (table.moveToNext()){
-                String pair = table.getString(1) + "&" + table.getString(2);
-                Team team = new Team(table.getString(1), table.getString(2));
+                String teamName = table.getString(1) + "&" + table.getString(2);
+                Team team = new Team(table.getString(1), table.getString(2), teamName);
                 CurrentGameEntity.getInstance().getTeams().add(team);
-                list.add(pair);
+                list.add(teamName);
             }
         }
     }
@@ -174,7 +176,7 @@ public class PairUpPlayersActivity extends AppCompatActivity {
         if(insertData){
             showToastMsg("Tim " + joined.get(0) + " & " + joined.get(1) +" dodan");
         } else {
-            showToastMsg("Greska s bazom podataka");
+            showToastMsg("Greška s bazom podataka");
         }
     }
 

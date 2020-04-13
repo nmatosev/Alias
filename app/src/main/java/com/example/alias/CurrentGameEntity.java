@@ -7,8 +7,6 @@ public class CurrentGameEntity {
 
     private static CurrentGameEntity instance;
 
-
-
     private  int teamQueue = 0;
 
     public int getTeamQueue() {
