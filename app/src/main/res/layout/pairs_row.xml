@@ -28,22 +28,16 @@
                 android:src="@mipmap/trash" />
 
             <TextView
-                android:id="@+id/player_name"
+                android:id="@+id/text_view_pairs"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_margin="5dp"
                 android:layout_weight="1"
                 android:background="@drawable/selector"
-                android:checkMark="?android:attr/listChoiceIndicatorMultiple"
                 android:textColor="#000"
                 android:textSize="20sp"
                 android:textStyle="bold" />
 
-            <CheckBox
-                android:id="@+id/check_box_pair"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="" />
 
         </LinearLayout>
 

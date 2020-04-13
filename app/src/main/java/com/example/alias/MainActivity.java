@@ -11,13 +11,16 @@ import android.widget.Button;
 
 public class MainActivity extends AppCompatActivity {
 
-    private Button pairUpPlayersButton;
-    private Button rulesButton;
-    private Button settingsButton;
-    private Button exitButton;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+
+        Button pairUpPlayersButton;
+        Button rulesButton;
+        Button settingsButton;
+        Button exitButton;
+
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         Toolbar toolbar = findViewById(R.id.toolbar);

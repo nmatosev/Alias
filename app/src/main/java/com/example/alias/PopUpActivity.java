@@ -44,9 +44,9 @@ public class PopUpActivity extends Activity {
     }
 
     public void addData(String newEntry){
-        boolean insertData = dataBaseHelper.addData(newEntry);
+        boolean insertData = dataBaseHelper.addPlayerData(newEntry);
         if(insertData){
-            showToastMsg("Data successfuly inserted");
+            showToastMsg("Players successfuly inserted");
         } else {
             showToastMsg("Something went wrong.");
         }
