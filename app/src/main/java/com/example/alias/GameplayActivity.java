@@ -4,6 +4,10 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.database.Cursor;
+import android.media.AudioAttributes;
+import android.media.AudioManager;
+import android.media.SoundPool;
+import android.os.Build;
 import android.os.Bundle;
 import android.os.CountDownTimer;
 import android.support.v7.app.AppCompatActivity;
@@ -40,13 +44,13 @@ public class GameplayActivity extends AppCompatActivity {
     TextView guesserTextView;
     TextView wordTextView;
     TextView scoreTextView;
+    private SoundPool soundPool;
+    int correctSound, passSound;
 
     Button correctButton;
     Button passButton;
 
     List<String> words = new ArrayList<>();
-
-    List<String> dictionary = new ArrayList<>();
 
     int roundDuration;
     int scoreCounter = 0;
@@ -57,6 +61,16 @@ public class GameplayActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_gameplay);
+
+        if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP){
+            AudioAttributes audioAttributes = new AudioAttributes.Builder().setUsage(AudioAttributes.USAGE_ASSISTANCE_SONIFICATION).setContentType(AudioAttributes.CONTENT_TYPE_SONIFICATION).build();
+            soundPool = new SoundPool.Builder().setMaxStreams(6).setAudioAttributes(audioAttributes).build();
+        } else {
+            soundPool = new SoundPool(6, AudioManager.STREAM_MUSIC, 0);
+        }
+
+        correctSound = soundPool.load(this, R.raw.correct, 1);
+        passSound = soundPool.load(this, R.raw.incorrect, 1);
 
         words = parseFile("res/raw/words.txt");
 
@@ -69,7 +83,6 @@ public class GameplayActivity extends AppCompatActivity {
         editor.apply();
 
         roundDuration = settingsPreferences.getInt("roundDuration", 30);
-        //roundDuration = 10;
 
         readerTextView = (TextView) findViewById(R.id.reader_text_view);
         guesserTextView = (TextView) findViewById(R.id.text_view_guesser);
@@ -80,18 +93,17 @@ public class GameplayActivity extends AppCompatActivity {
 
         databaseHelper = new DatabaseHelper(this);
 
-
         queue = CurrentGameEntity.getInstance().getTeamQueue();
         final List<Team> teams = CurrentGameEntity.getInstance().getTeams();
         String player1;
         String player2;
-        Team team = teams.get(queue);
+        final Team team = teams.get(queue);
         player1 = team.getPlayers().get(0);
         player2 = team.getPlayers().get(1);
 
-
         readerTextView.setText("Čita: " + player1);
         guesserTextView.setText("Odgovara : " + player2);
+        team.getRoundSummary().put(team.getRound(), new ArrayList<Answer>());
 
         startButton = (Button) findViewById(R.id.button_start);
         countDownTextView = (TextView) findViewById(R.id.text_view_count_down);
@@ -103,25 +115,32 @@ public class GameplayActivity extends AppCompatActivity {
                 correctButton.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        if (words.size() > wordCounter) {
-                            wordTextView.setText(words.get(wordCounter+=1));
-                            scoreCounter++;
-                            showToastMsg("Bravooo!");
-                            Log.i("Current score", "Score " + scoreCounter + " word cnt " + wordCounter);
-                            scoreTextView.setText("Trenutni rezultat " + scoreCounter + " bodova");
-                        }
+                        String currentWord = words.get(wordCounter += 1);
+                        wordTextView.setText(currentWord);
+                        scoreCounter++;
+                        soundPool.play(correctSound, 1,1,0, 0,1 );
+
+                        Answer answer = new Answer(currentWord,true);
+                        team.getRoundSummary().get(team.getRound()).add(answer);
+                        Log.i("Current score", "Score " + scoreCounter + " word cnt " + wordCounter);
+                        scoreTextView.setText("Trenutni rezultat " + scoreCounter + " bodova");
+
                     }
                 });
 
                 passButton.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        if (words.size() > wordCounter) {
-                            wordTextView.setText(words.get(wordCounter += 1));
-                            scoreCounter--;
-                            showToastMsg(":(");
-                            scoreTextView.setText("Trenutni rezultat " + scoreCounter + " bodova");
-                        }
+                        String currentWord = words.get(wordCounter += 1);
+
+                        wordTextView.setText(words.get(wordCounter += 1));
+                        Answer answer = new Answer(currentWord,false);
+                        team.getRoundSummary().get(team.getRound()).add(answer);
+
+                        scoreCounter--;
+                        soundPool.play(passSound, 1,1,0, 0,1 );
+                        scoreTextView.setText("Trenutni rezultat " + scoreCounter + " bodova");
+
                     }
                 });
 
@@ -152,6 +171,13 @@ public class GameplayActivity extends AppCompatActivity {
 
     private void showToastMsg(String message) {
         Toast.makeText(this, message, Toast.LENGTH_SHORT).show();
+    }
+
+    @Override
+    protected void onDestroy(){
+        super.onDestroy();
+        soundPool.release();
+        soundPool = null;
     }
 
 
@@ -204,7 +230,7 @@ public class GameplayActivity extends AppCompatActivity {
                 }
 
 
-                Log.i("mtc size", ""+matchedWords.size());
+                Log.i("mtc size", "" + matchedWords.size());
                 Log.i("fls", matchedWords.toString());
 
                 int cnt = 0;
@@ -212,12 +238,12 @@ public class GameplayActivity extends AppCompatActivity {
                 List<String> sc = new ArrayList<>();
                 List<String> thr = new ArrayList<>();
 
-                for(String wr : matchedWords){
-                    if(cnt<400){
+                for (String wr : matchedWords) {
+                    if (cnt < 400) {
                         first.add(wr);
-                    } else if(cnt >= 400 && cnt <= 800){
+                    } else if (cnt >= 400 && cnt <= 800) {
                         sc.add(wr);
-                    } else if(cnt>800){
+                    } else if (cnt > 800) {
                         thr.add(wr);
                     }
                     cnt++;

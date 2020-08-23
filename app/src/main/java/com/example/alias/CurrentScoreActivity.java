@@ -1,15 +1,35 @@
 package com.example.alias;
 
+import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.graphics.drawable.Drawable;
+import android.media.AudioAttributes;
+import android.media.AudioManager;
+import android.media.SoundPool;
+import android.os.Build;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.ImageView;
+import android.widget.ListView;
 import android.widget.TextView;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
+
+import static android.webkit.ConsoleMessage.MessageLevel.LOG;
 
 public class CurrentScoreActivity extends AppCompatActivity {
 
@@ -17,6 +37,12 @@ public class CurrentScoreActivity extends AppCompatActivity {
     TextView roundTextView;
     TextView teamResultTextView;
     String winners = "";
+    TextView wordTextView;
+    SummaryAdapter summaryAdapter;
+    SoundPool soundPool;
+    String mainMenu = "Glavni meni";
+    String continueGame = "Nastavi";
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -28,22 +54,44 @@ public class CurrentScoreActivity extends AppCompatActivity {
 
         int queue = CurrentGameEntity.getInstance().getTeamQueue();
         Team team = CurrentGameEntity.getInstance().getTeams().get(queue);
-        String reader = team.getPlayers().get(0);
-        String listener = team.getPlayers().get(1);
+        int round = team.getRound();
+
+        if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP){
+            AudioAttributes audioAttributes = new AudioAttributes.Builder().setUsage(AudioAttributes.USAGE_ASSISTANCE_SONIFICATION).setContentType(AudioAttributes.CONTENT_TYPE_SONIFICATION).build();
+            soundPool = new SoundPool.Builder().setMaxStreams(6).setAudioAttributes(audioAttributes).build();
+        } else {
+            soundPool = new SoundPool(6, AudioManager.STREAM_MUSIC, 0);
+        }
+        int cheerSound = soundPool.load(this, R.raw.win, 1);
+
         String teamName = team.getTeamName();
+
+        final ListView summaryListView = (ListView) findViewById(R.id.summary_list_view);
+        Log.i("Sum " , team.getRoundSummary().toString());
+        summaryAdapter = new SummaryAdapter(this, team.getRoundSummary().get(round)); //CHECK THHIS - COULD BE DONE BETTER
+        summaryListView.setAdapter(summaryAdapter);
 
         roundTextView.setText("Runda: " + team.getRound());
         int currentRound = team.getRound() + 1;
+
         team.setRound(currentRound);
         String roundSummary = teamName + " - trenutno stanje bodova " + team.getCurrentScore();
+
         boolean finished = false;
 
         if (checkIfThereIsAWinner()) {
             finished = true;
-            teamResultTextView.setText("Pobjednici " +winners + " vječna vam slava i hvala! ");
+            teamResultTextView.setText("Pobjednici " + winners + " ! ");
+            soundPool.play(cheerSound, 1 , 1,  0, 0, 1);
+
+            for(Team t : CurrentGameEntity.getInstance().getTeams()){
+                t.setCurrentScore(0);
+                t.setRoundSummary(new HashMap<Integer, List<Answer>>());
+                t.setRound(0);
+            }
+
         } else {
             teamResultTextView.setText(roundSummary);
-
         }
 
         queue += 1;
@@ -55,16 +103,15 @@ public class CurrentScoreActivity extends AppCompatActivity {
 
         if (finished) {
 
-            buttonNextPair.setText("Glavni meni");
+            buttonNextPair.setText(mainMenu);
             buttonNextPair.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
                     startActivity(new Intent(CurrentScoreActivity.this, MainActivity.class));
                 }
             });
-
         } else {
-            buttonNextPair.setText("Nastavi");
+            buttonNextPair.setText(continueGame);
             buttonNextPair.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
@@ -72,25 +119,60 @@ public class CurrentScoreActivity extends AppCompatActivity {
                 }
             });
         }
+    }
 
+    class SummaryAdapter extends ArrayAdapter<Answer> {
+
+        Context context;
+        List<Answer> summary;
+
+        SummaryAdapter(Context c, List<Answer> summary){
+            super(c, R.layout.summary_row, R.id.textView, summary);
+            this.context = c;
+            this.summary = summary;
+        }
+
+        @NonNull
+        @Override
+        public View getView(final int position, @Nullable View convertView, @NonNull ViewGroup parent){
+
+            LayoutInflater layoutInflater = (LayoutInflater)getApplicationContext().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+            View row = layoutInflater.inflate(R.layout.summary_row, parent, false);
+            int tickId = getResources().getIdentifier("@drawable/tick", null, getPackageName());
+            int wrongId = getResources().getIdentifier("@drawable/wrong", null, getPackageName());
+
+            Log.d("Answers in round", summary.toString());
+
+            wordTextView = row.findViewById(R.id.word);
+            ImageView imageview = row.findViewById(R.id.tick);
+            if(summary.get(position).isCorrect()){
+                Drawable res = getResources().getDrawable(tickId);
+                imageview.setImageDrawable(res);
+            } else {
+                Drawable res = getResources().getDrawable(wrongId);
+                imageview.setImageDrawable(res);
+            }
+
+            wordTextView.setText(summary.get(position).getTerm());
+            return row;
+        }
     }
 
     /**
      * There are two conditions in order to be a winner:
      *      - Have the equal or grater score than scoreToWin variable value
      *      - Have equal number of rounds as any other team
-     * @return
+     * @return true if there is a winner, false otherwise
      */
     private boolean checkIfThereIsAWinner() {
         SharedPreferences settingsPreferences = getSharedPreferences("settings_prefs", MODE_PRIVATE);
         int scoreToWin = settingsPreferences.getInt("scoreToWin", 30);
 
         for (Team team : CurrentGameEntity.getInstance().getTeams()) {
-            Team currentTeam = team;
 
             if (team.getCurrentScore() >= scoreToWin) {
                 for (Team teamRound : CurrentGameEntity.getInstance().getTeams()) {
-                    if (currentTeam.getRound() > teamRound.getRound()){
+                    if (team.getRound() > teamRound.getRound()){
                         return false;
                     }
                 }
@@ -101,19 +183,15 @@ public class CurrentScoreActivity extends AppCompatActivity {
         return false;
     }
 
-    /**
-     * Check other teams rounds.
-     *
-     * @param currentTeamRound
-     * @return
-     */
-    private boolean checkIfRoundNumberEqual(int currentTeamRound) {
-        for (Team team : CurrentGameEntity.getInstance().getTeams()) {
-            if (team.getRound() < currentTeamRound) {
-                return false;
-            }
-        }
-        return true;
+
+    @Override
+    protected void onDestroy(){
+        super.onDestroy();
+        soundPool.release();
+        soundPool = null;
     }
+
+
+
 
 }

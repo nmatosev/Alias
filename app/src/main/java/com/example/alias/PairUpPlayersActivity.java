@@ -42,7 +42,6 @@ public class PairUpPlayersActivity extends AppCompatActivity {
     CheckBox pairCheckBox;
     Button pairUpButton;
     TextView textViewPairs;
-    HashMap<Integer, LinkedList<String>> pairs = new HashMap<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -211,7 +210,6 @@ public class PairUpPlayersActivity extends AppCompatActivity {
             pairCheckBox = row.findViewById(R.id.check_box_pair);
             trashIcon = row.findViewById(R.id.image_view_trash);
             playerTextView.setText(players.get(position));
-
 
             trashIcon.setOnClickListener(new View.OnClickListener() {
                 @Override

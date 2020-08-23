@@ -1,13 +1,27 @@
 package com.example.alias;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
+import java.util.TreeMap;
 
 public class Team {
 
     private List<String> players = new ArrayList<>();
-    private int round = 1;
+    private int round = 0;
     private String teamName;
+
+    private Map<Integer, List<Answer>> roundSummary = new TreeMap<>();
+
+
+    public Map<Integer, List<Answer>> getRoundSummary() {
+        return roundSummary;
+    }
+
+    public void setRoundSummary(Map<Integer, List<Answer>> roundSummary) {
+        this.roundSummary = roundSummary;
+    }
 
     public String getTeamName() {
         return teamName;
@@ -48,4 +62,6 @@ public class Team {
     public void setCurrentScore(int currentScore) {
         this.currentScore = currentScore;
     }
+
+
 }
