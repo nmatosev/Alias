@@ -44,6 +44,7 @@ public class GameplayActivity extends AppCompatActivity {
     TextView guesserTextView;
     TextView wordTextView;
     TextView scoreTextView;
+    TextView scoreTotalTextView;
     private SoundPool soundPool;
     int correctSound, passSound;
 
@@ -62,12 +63,7 @@ public class GameplayActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_gameplay);
 
-        if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP){
-            AudioAttributes audioAttributes = new AudioAttributes.Builder().setUsage(AudioAttributes.USAGE_ASSISTANCE_SONIFICATION).setContentType(AudioAttributes.CONTENT_TYPE_SONIFICATION).build();
-            soundPool = new SoundPool.Builder().setMaxStreams(6).setAudioAttributes(audioAttributes).build();
-        } else {
-            soundPool = new SoundPool(6, AudioManager.STREAM_MUSIC, 0);
-        }
+        soundPool = Utilities.getSoundPool();
 
         correctSound = soundPool.load(this, R.raw.correct, 1);
         passSound = soundPool.load(this, R.raw.incorrect, 1);
@@ -90,6 +86,7 @@ public class GameplayActivity extends AppCompatActivity {
         passButton = (Button) findViewById(R.id.button_pass);
         wordTextView = (TextView) findViewById(R.id.text_view_word);
         scoreTextView = (TextView) findViewById(R.id.text_view_score);
+        scoreTotalTextView = (TextView) findViewById(R.id.text_view_score_total);
 
         databaseHelper = new DatabaseHelper(this);
 
@@ -103,27 +100,33 @@ public class GameplayActivity extends AppCompatActivity {
 
         readerTextView.setText("Čita: " + player1);
         guesserTextView.setText("Odgovara : " + player2);
+
+        scoreTotalTextView.setText("Ukupno: " + team.getCurrentScore());
         team.getRoundSummary().put(team.getRound(), new ArrayList<Answer>());
 
         startButton = (Button) findViewById(R.id.button_start);
         countDownTextView = (TextView) findViewById(R.id.text_view_count_down);
         startButton.setOnClickListener(new View.OnClickListener() {
+
             @Override
             public void onClick(View v) {
                 wordTextView.setText(words.get(wordCounter));
+                startButton.setEnabled(false);
 
                 correctButton.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        String currentWord = words.get(wordCounter += 1);
+                        String currentWord = words.get(wordCounter);
+                        Answer answer = new Answer(currentWord,true);
+                        team.getRoundSummary().get(team.getRound()).add(answer);
+
+                        currentWord = words.get(wordCounter+=1);
                         wordTextView.setText(currentWord);
                         scoreCounter++;
                         soundPool.play(correctSound, 1,1,0, 0,1 );
 
-                        Answer answer = new Answer(currentWord,true);
-                        team.getRoundSummary().get(team.getRound()).add(answer);
                         Log.i("Current score", "Score " + scoreCounter + " word cnt " + wordCounter);
-                        scoreTextView.setText("Trenutni rezultat " + scoreCounter + " bodova");
+                        scoreTextView.setText("Trenutni rezultat: " + scoreCounter);
 
                     }
                 });
@@ -131,14 +134,15 @@ public class GameplayActivity extends AppCompatActivity {
                 passButton.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        String currentWord = words.get(wordCounter += 1);
-
-                        wordTextView.setText(words.get(wordCounter += 1));
+                        String currentWord = words.get(wordCounter);
                         Answer answer = new Answer(currentWord,false);
                         team.getRoundSummary().get(team.getRound()).add(answer);
 
+                        currentWord = words.get(wordCounter+=1);
+                        wordTextView.setText(currentWord);
                         scoreCounter--;
                         soundPool.play(passSound, 1,1,0, 0,1 );
+
                         scoreTextView.setText("Trenutni rezultat " + scoreCounter + " bodova");
 
                     }
@@ -163,15 +167,15 @@ public class GameplayActivity extends AppCompatActivity {
                         teams.get(queue).getPlayers().add(player1);
                         countDownTextView.setText("Gotova runda!");
                         startActivity(new Intent(GameplayActivity.this, CurrentScoreActivity.class));
+
                     }
                 }.start();
             }
         });
     }
 
-    private void showToastMsg(String message) {
-        Toast.makeText(this, message, Toast.LENGTH_SHORT).show();
-    }
+
+
 
     @Override
     protected void onDestroy(){

@@ -56,34 +56,27 @@ public class CurrentScoreActivity extends AppCompatActivity {
         Team team = CurrentGameEntity.getInstance().getTeams().get(queue);
         int round = team.getRound();
 
-        if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP){
-            AudioAttributes audioAttributes = new AudioAttributes.Builder().setUsage(AudioAttributes.USAGE_ASSISTANCE_SONIFICATION).setContentType(AudioAttributes.CONTENT_TYPE_SONIFICATION).build();
-            soundPool = new SoundPool.Builder().setMaxStreams(6).setAudioAttributes(audioAttributes).build();
-        } else {
-            soundPool = new SoundPool(6, AudioManager.STREAM_MUSIC, 0);
-        }
-        int cheerSound = soundPool.load(this, R.raw.win, 1);
+        soundPool = Utilities.getSoundPool();
 
         String teamName = team.getTeamName();
 
         final ListView summaryListView = (ListView) findViewById(R.id.summary_list_view);
         Log.i("Sum " , team.getRoundSummary().toString());
+        int currentRound = team.getRound() + 1;
+
         summaryAdapter = new SummaryAdapter(this, team.getRoundSummary().get(round)); //CHECK THHIS - COULD BE DONE BETTER
         summaryListView.setAdapter(summaryAdapter);
 
-        roundTextView.setText("Runda: " + team.getRound());
-        int currentRound = team.getRound() + 1;
+        String roundPlaceHolder = "Runda: " + currentRound;
+        roundTextView.setText(roundPlaceHolder);
 
         team.setRound(currentRound);
         String roundSummary = teamName + " - trenutno stanje bodova " + team.getCurrentScore();
 
-        boolean finished = false;
-
+        boolean isFinished = false;
         if (checkIfThereIsAWinner()) {
-            finished = true;
             teamResultTextView.setText("Pobjednici " + winners + " ! ");
-            soundPool.play(cheerSound, 1 , 1,  0, 0, 1);
-
+            isFinished = true;
             for(Team t : CurrentGameEntity.getInstance().getTeams()){
                 t.setCurrentScore(0);
                 t.setRoundSummary(new HashMap<Integer, List<Answer>>());
@@ -101,7 +94,7 @@ public class CurrentScoreActivity extends AppCompatActivity {
             CurrentGameEntity.getInstance().setTeamQueue(queue);
         }
 
-        if (finished) {
+        if (isFinished) {
 
             buttonNextPair.setText(mainMenu);
             buttonNextPair.setOnClickListener(new View.OnClickListener() {
@@ -190,8 +183,4 @@ public class CurrentScoreActivity extends AppCompatActivity {
         soundPool.release();
         soundPool = null;
     }
-
-
-
-
 }

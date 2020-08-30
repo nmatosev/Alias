@@ -9,7 +9,7 @@ import java.util.TreeMap;
 public class Team {
 
     private List<String> players = new ArrayList<>();
-    private int round = 0;
+    private int round;
     private String teamName;
 
     private Map<Integer, List<Answer>> roundSummary = new TreeMap<>();

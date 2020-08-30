@@ -79,7 +79,18 @@
             android:textColor="@drawable/blue_color"
             android:gravity="center"
             android:layout_gravity="bottom"
-            android:text="Trenutni rezultat: " />
+            android:text="Trenutno bodova u rundi: " />
+
+        <TextView
+            android:id="@+id/text_view_score_total"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textStyle="bold"
+            android:textSize="30sp"
+            android:textColor="@drawable/blue_color"
+            android:gravity="center"
+            android:layout_gravity="bottom"
+            />
 
         <LinearLayout
             android:layout_width="match_parent"
