@@ -70,8 +70,6 @@ public class GameplayActivity extends AppCompatActivity {
 
         words = parseFile("res/raw/words.txt");
 
-        parseDictionary();
-
         Collections.shuffle(words);
         SharedPreferences settingsPreferences = getSharedPreferences("settings_prefs", MODE_PRIVATE);
         SharedPreferences.Editor editor = getSharedPreferences("score_prefs", MODE_PRIVATE).edit();
@@ -203,61 +201,9 @@ public class GameplayActivity extends AppCompatActivity {
         } catch (IOException e) {
             e.printStackTrace();
         }
-        //TO DO:smanjit vracenu listu
         Collections.shuffle(words);
         return words;
     }
 
-    /**
-     * Helper method for dictionary file parsing
-     */
-    private void parseDictionary() {
-        String patternDict = "(.+)";
 
-        List<String> matchedWords = new ArrayList<>();
-        InputStream in = this.getClass().getClassLoader().getResourceAsStream("res/raw/bujica.txt");
-
-        try {
-            BufferedReader br = new BufferedReader(new InputStreamReader(in));
-            String st;
-
-            Pattern pattern = Pattern.compile(patternDict);
-
-            while ((st = br.readLine()) != null) {
-                Log.i("line ", st.trim());
-
-                Matcher matcher = pattern.matcher(st.trim());
-                if (matcher.matches()) {
-                    //Log.i("line M", st.trim());
-                    String matched = matcher.group(1);
-                    matchedWords.add(matched);
-                }
-
-
-                Log.i("mtc size", "" + matchedWords.size());
-                Log.i("fls", matchedWords.toString());
-
-                int cnt = 0;
-                List<String> first = new ArrayList<>();
-                List<String> sc = new ArrayList<>();
-                List<String> thr = new ArrayList<>();
-
-                for (String wr : matchedWords) {
-                    if (cnt < 400) {
-                        first.add(wr);
-                    } else if (cnt >= 400 && cnt <= 800) {
-                        sc.add(wr);
-                    } else if (cnt > 800) {
-                        thr.add(wr);
-                    }
-                    cnt++;
-                }
-                Log.i("fr", first.toString());
-                Log.i("sc", sc.toString());
-                Log.i("th", thr.toString());
-            }
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-    }
 }
