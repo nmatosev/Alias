@@ -26,7 +26,7 @@ public class MainActivity extends AppCompatActivity {
         pairUpPlayersButton = (Button) findViewById(R.id.button_play);
         rulesButton = (Button) findViewById(R.id.button_rules);
         settingsButton = (Button) findViewById(R.id.button_settings);
-        exitButton = (Button)findViewById(R.id.button_exit);
+        exitButton = (Button) findViewById(R.id.button_exit);
         pairUpPlayersButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

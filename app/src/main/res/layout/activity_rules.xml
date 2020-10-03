@@ -16,7 +16,9 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_margin="30dp"
-            android:text="Igra Alias igra se u parovima. Jedan igrač drugome objašnjava pojmove onako kako mu izlaze na ekranu. Cilj je u zadanom vremenu pogoditi što više pojmova. Zabranjeno je koristiti korijen riječi prilikom objašnjavanja." />
+            android:textColor="#000"
+            android:textSize="25sp"
+            android:text="@string/rules_desc" />
     </LinearLayout>
 
 

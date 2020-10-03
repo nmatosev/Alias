@@ -17,12 +17,12 @@ public class CurrentGameEntity {
         this.teamQueue = teamQueue;
     }
 
-    private CurrentGameEntity(){
+    private CurrentGameEntity() {
 
     }
 
-    public static CurrentGameEntity getInstance(){
-        if(instance==null){
+    public static CurrentGameEntity getInstance() {
+        if (instance == null) {
             instance = new CurrentGameEntity();
         }
         return instance;
@@ -31,7 +31,7 @@ public class CurrentGameEntity {
 
     private TreeMap<Integer, Team> teams = new TreeMap<>();
 
-    public  TreeMap<Integer, Team> getTeams() {
+    public TreeMap<Integer, Team> getTeams() {
         return teams;
     }
 

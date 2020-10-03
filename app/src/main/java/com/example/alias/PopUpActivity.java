@@ -16,7 +16,7 @@ public class PopUpActivity extends Activity {
     DatabaseHelper dataBaseHelper;
 
     @Override
-    protected void onCreate (Bundle savedInstanceState) {
+    protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.pop_up_window);
         playerEditText = (EditText) findViewById(R.id.first_player_edit_text);
@@ -28,14 +28,14 @@ public class PopUpActivity extends Activity {
         int width = displayMetrics.widthPixels;
         int height = displayMetrics.heightPixels;
 
-        getWindow().setLayout((int)(width*0.8), (int) (height*0.6));
+        getWindow().setLayout((int) (width * 0.8), (int) (height * 0.6));
         saveButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 playerName = playerEditText.getText().toString();
-                if(playerName.equals("")){
+                if (playerName.equals("")) {
                     showToastMsg("You must write name!");
-                }else {
+                } else {
                     addData(playerName);
                     startActivity(new Intent(PopUpActivity.this, PairUpPlayersActivity.class));
                 }
@@ -43,16 +43,21 @@ public class PopUpActivity extends Activity {
         });
     }
 
-    public void addData(String newEntry){
+    /**
+     * Adds new player to DB
+     *
+     * @param newEntry
+     */
+    public void addData(String newEntry) {
         boolean insertData = dataBaseHelper.addPlayerData(newEntry);
-        if(insertData){
+        if (insertData) {
             showToastMsg("Players successfuly inserted");
         } else {
             showToastMsg("Something went wrong.");
         }
     }
 
-    private void showToastMsg(String message){
+    private void showToastMsg(String message) {
         Toast.makeText(this, message, Toast.LENGTH_SHORT).show();
     }
 }

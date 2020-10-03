@@ -93,7 +93,7 @@ senzori,senzor,mreža,mreže,element,atoma,molekula,kisik,ugljik,dijamant,grafit
 sredstva,fizika,godina,praznik,radni dan,profesor,nastavnik,Badnjak,Božić,Uskrs,košulja,prijatelj,Nobelova nagrada,borba,operacija,nos,tehnologija,gen,napredak,strana,dokaz,kaput,jakna,obuća,cipele,tenisice,
 događaj,društvo,priroda,hrana,civilizacija,djeca,grana,stablo,amerikanci,ograničenje,granica,trenutak,optimist,pesimist,umjetna inteligencija,električni automobil,interes,zanimljivost,interesirati,
 šah,iskorak,potencijal,svijet,uloga,romantika,realizam,radno mjesto,utopija,podaci,informacija,objekt,razred,advent,zračenje,znanost,znanstvenik,znanastvenici,studenti,prava,studentska prava,svemir,
-globalizacija,ubrzanje,usporavanje,predavanje,vrtić,ormar
+globalizacija,ubrzanje,usporavanje,predavanje,vrtić,ormar,bolnica,ljekarna,lijek,doktor,konobar,konobarica,restoran,kafić,stolar,postolar,šegrt Hlapić
 
 
 

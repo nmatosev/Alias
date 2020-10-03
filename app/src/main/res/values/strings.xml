@@ -30,6 +30,10 @@
     <string name="default_round_duration">10</string>
     <string name="default_score_to_win">30</string>
 
+    <!--Rules activity-->
+    <string name="rules_desc">Igra Alias igra se u parovima. Jedan igrač drugome objašnjava pojmove onako
+        kako mu izlaze na ekranu. Cilj je u zadanom vremenu pogoditi što više pojmova. Zabranjeno je koristiti korijen riječi prilikom objašnjavanja.
+    </string>
 
 
 </resources>

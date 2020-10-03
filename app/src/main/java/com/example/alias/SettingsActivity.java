@@ -39,12 +39,12 @@ public class SettingsActivity extends AppCompatActivity {
                 editor.putInt("scoreToWin", scoreToWin);
                 editor.apply();
 
-                Log.i("score", ""+scoreToWin);
-                Log.i("dur", ""+roundDuration);
-                if(roundDuration>300 || scoreToWin>300 || roundDuration<10 || scoreToWin<10){
+                Log.i("score", "" + scoreToWin);
+                Log.i("dur", "" + roundDuration);
+                if (roundDuration > 300 || scoreToWin > 300 || roundDuration < 10 || scoreToWin < 10) {
 
                     showToastMsg("Trajanje runde mora biti manje od 10 sekundi do 5 minuta i bodovi za pobjedu moraju biti od 10 do 300.");
-                } else{
+                } else {
                     showToastMsg("Promjene spremljene!");
                     startActivity(new Intent(SettingsActivity.this, MainActivity.class));
                 }
@@ -52,7 +52,7 @@ public class SettingsActivity extends AppCompatActivity {
         });
     }
 
-    private void showToastMsg(String message){
+    private void showToastMsg(String message) {
         Toast.makeText(this, message, Toast.LENGTH_SHORT).show();
     }
 

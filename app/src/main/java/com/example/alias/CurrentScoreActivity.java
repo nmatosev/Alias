@@ -63,7 +63,7 @@ public class CurrentScoreActivity extends AppCompatActivity {
         final ListView summaryListView = (ListView) findViewById(R.id.summary_list_view);
         int currentRound = team.getRound() + 1;
 
-        summaryAdapter = new SummaryAdapter(this, team.getRoundSummary().get(round)); //TODO: CHECK THHIS - COULD BE DONE BETTER
+        summaryAdapter = new SummaryAdapter(this, team.getRoundSummary().get(round)); //TODO: CHECK THIS - COULD BE DONE BETTER
         summaryListView.setAdapter(summaryAdapter);
 
         String roundPlaceHolder = "Runda: " + currentRound;
@@ -181,16 +181,16 @@ public class CurrentScoreActivity extends AppCompatActivity {
         for (Map.Entry<Integer, Team> team : teams.entrySet()) {
             if (team.getValue().getCurrentScore() > winners.getCurrentScore()) {
                 winners = team.getValue();
-            } else if (!team.getValue().equals(winners) && team.getValue().getCurrentScore() == winners.getCurrentScore()){
-                Log.d("WinnerCheck","Tie " + winners + " & " + team);
+            } else if (!team.getValue().equals(winners) && team.getValue().getCurrentScore() == winners.getCurrentScore()) {
+                Log.d("WinnerCheck", "Tie " + winners + " & " + team);
                 return false;
             }
         }
 
-        Log.d("WinnerCheck","Currently best "+winners.getTeamName() + " " + winners.getCurrentScore());
+        Log.d("WinnerCheck", "Currently best " + winners.getTeamName() + " " + winners.getCurrentScore());
 
         //checks if best team has enough points to win
-        if(winners != null && winners.getCurrentScore() >= scoreToWin){
+        if (winners != null && winners.getCurrentScore() >= scoreToWin) {
             Log.d("WinnerCheck", "Winner decided " + winners.getTeamName() + " " + winners.getCurrentScore());
             return true;
         }
