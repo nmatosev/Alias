@@ -8,9 +8,23 @@ import java.util.TreeMap;
 
 public class Team {
 
-    private List<String> players = new ArrayList<>();
     private int round;
     private String teamName;
+    private Player player1;
+    private Player player2;
+
+    public Player getPlayer1() {
+        return player1;
+    }
+
+    public void setPlayer1(Player player1) {
+        this.player1 = player1;
+    }
+
+
+    public Player getPlayer2() {
+        return player2;
+    }
 
     private Map<Integer, List<Answer>> roundSummary = new TreeMap<>();
 
@@ -39,19 +53,12 @@ public class Team {
         this.round = round;
     }
 
-    public Team(String player1, String player2, String teamName) {
-        players.add(player1);
-        players.add(player2);
+    public Team(Player player1, Player player2, String teamName) {
+        this.player1 = player1;
+        this.player2 = player2;
         this.teamName = teamName;
     }
 
-    public List<String> getPlayers() {
-        return players;
-    }
-
-    public void setPlayers(List<String> players) {
-        this.players = players;
-    }
 
     private int currentScore;
 

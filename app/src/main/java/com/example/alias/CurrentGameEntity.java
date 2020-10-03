@@ -1,13 +1,13 @@
 package com.example.alias;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.Map;
+import java.util.TreeMap;
 
 public class CurrentGameEntity {
 
     private static CurrentGameEntity instance;
 
-    private  int teamQueue = 0;
+    private int teamQueue = 0;
 
     public int getTeamQueue() {
         return teamQueue;
@@ -28,15 +28,11 @@ public class CurrentGameEntity {
         return instance;
     }
 
-    private List<Team> teams = new ArrayList<>();
 
+    private TreeMap<Integer, Team> teams = new TreeMap<>();
 
-
-    public void setTeams(List<Team> teams) {
-        this.teams = teams;
-    }
-
-    public List<Team> getTeams() {
+    public  TreeMap<Integer, Team> getTeams() {
         return teams;
     }
+
 }

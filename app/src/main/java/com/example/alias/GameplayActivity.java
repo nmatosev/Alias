@@ -1,13 +1,8 @@
 package com.example.alias;
 
-import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.database.Cursor;
-import android.media.AudioAttributes;
-import android.media.AudioManager;
 import android.media.SoundPool;
-import android.os.Build;
 import android.os.Bundle;
 import android.os.CountDownTimer;
 import android.support.v7.app.AppCompatActivity;
@@ -15,24 +10,16 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import java.io.BufferedReader;
-import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.FileReader;
-import java.io.FileWriter;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
-import java.io.OutputStreamWriter;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
-import java.util.Scanner;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
+import java.util.Map;
 
 public class GameplayActivity extends AppCompatActivity {
 
@@ -57,6 +44,7 @@ public class GameplayActivity extends AppCompatActivity {
     int scoreCounter = 0;
     int wordCounter = 0;
     int queue;
+    String roundFinished = "Gotovo runda!";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -68,7 +56,8 @@ public class GameplayActivity extends AppCompatActivity {
         correctSound = soundPool.load(this, R.raw.correct, 1);
         passSound = soundPool.load(this, R.raw.incorrect, 1);
 
-        words = parseFile("res/raw/words.txt");
+        words = parseFile(Constants.WORDS_PATH);
+        Log.d("Word count", "Count: " + words.size());
 
         Collections.shuffle(words);
         SharedPreferences settingsPreferences = getSharedPreferences("settings_prefs", MODE_PRIVATE);
@@ -89,17 +78,22 @@ public class GameplayActivity extends AppCompatActivity {
         databaseHelper = new DatabaseHelper(this);
 
         queue = CurrentGameEntity.getInstance().getTeamQueue();
-        final List<Team> teams = CurrentGameEntity.getInstance().getTeams();
-        String player1;
-        String player2;
+        final Map<Integer, Team> teams = CurrentGameEntity.getInstance().getTeams();
+
+        Player player1;
+        Player player2;
+
+        Log.d("Teams present", " " + teams.entrySet());
+
         final Team team = teams.get(queue);
-        player1 = team.getPlayers().get(0);
-        player2 = team.getPlayers().get(1);
+        player1 = team.getPlayer1();
+        player2 = team.getPlayer2();
 
-        readerTextView.setText("Čita: " + player1);
-        guesserTextView.setText("Odgovara : " + player2);
 
-        scoreTotalTextView.setText("Ukupno: " + team.getCurrentScore());
+        setReaderGuesser(player1, player2);
+
+        String totalScore = "Ukupno: " + team.getCurrentScore();
+        scoreTotalTextView.setText(totalScore);
         team.getRoundSummary().put(team.getRound(), new ArrayList<Answer>());
 
         startButton = (Button) findViewById(R.id.button_start);
@@ -115,16 +109,17 @@ public class GameplayActivity extends AppCompatActivity {
                     @Override
                     public void onClick(View v) {
                         String currentWord = words.get(wordCounter);
-                        Answer answer = new Answer(currentWord,true);
+                        Answer answer = new Answer(currentWord, true);
                         team.getRoundSummary().get(team.getRound()).add(answer);
 
-                        currentWord = words.get(wordCounter+=1);
+                        currentWord = words.get(wordCounter += 1);
                         wordTextView.setText(currentWord);
                         scoreCounter++;
-                        soundPool.play(correctSound, 1,1,0, 0,1 );
+                        soundPool.play(correctSound, 1, 1, 0, 0, 1);
 
                         Log.i("Current score", "Score " + scoreCounter + " word cnt " + wordCounter);
-                        scoreTextView.setText("Trenutni rezultat: " + scoreCounter);
+                        String currentScoreMsg = "Trenutni rezultat: " + scoreCounter;
+                        scoreTextView.setText(currentScoreMsg);
 
                     }
                 });
@@ -133,15 +128,16 @@ public class GameplayActivity extends AppCompatActivity {
                     @Override
                     public void onClick(View v) {
                         String currentWord = words.get(wordCounter);
-                        Answer answer = new Answer(currentWord,false);
+                        Answer answer = new Answer(currentWord, false);
                         team.getRoundSummary().get(team.getRound()).add(answer);
 
-                        currentWord = words.get(wordCounter+=1);
+                        currentWord = words.get(wordCounter += 1);
                         wordTextView.setText(currentWord);
                         scoreCounter--;
-                        soundPool.play(passSound, 1,1,0, 0,1 );
+                        soundPool.play(passSound, 1, 1, 0, 0, 1);
 
-                        scoreTextView.setText("Trenutni rezultat " + scoreCounter + " bodova");
+                        String currentScoreMsg = "Trenutni rezultat " + scoreCounter + " bodova";
+                        scoreTextView.setText(currentScoreMsg);
 
                     }
                 });
@@ -158,25 +154,57 @@ public class GameplayActivity extends AppCompatActivity {
 
                     @Override
                     public void onFinish() {
-                        int total = teams.get(queue).getCurrentScore() + scoreCounter;
-                        teams.get(queue).setCurrentScore(total);
-                        String player1 = teams.get(queue).getPlayers().get(0);
-                        teams.get(queue).getPlayers().remove(0);
-                        teams.get(queue).getPlayers().add(player1);
-                        countDownTextView.setText("Gotova runda!");
+                        Team team = teams.get(queue);
+                        int total = team.getCurrentScore() + scoreCounter;
+                        team.setCurrentScore(total);
+                        countDownTextView.setText(roundFinished);
                         startActivity(new Intent(GameplayActivity.this, CurrentScoreActivity.class));
 
                     }
                 }.start();
             }
         });
+
+        toggleRole(player1);
+        toggleRole(player2);
+    }
+
+    /**
+     * Sets reader/guesser text views in GUI
+     *
+     * @param player1 Player1 object representation
+     * @param player2 Player2 object representation
+     */
+    private void setReaderGuesser(Player player1, Player player2) {
+        String readerText;
+        String guesserText;
+        if (player1.isReader()) {
+            readerText = Constants.READS + player1.getName();
+            guesserText = Constants.GUESS + player2.getName();
+        } else {
+            readerText = Constants.READS + player2.getName();
+            guesserText = Constants.GUESS + player1.getName();
+        }
+        readerTextView.setText(readerText);
+        guesserTextView.setText(guesserText);
+    }
+
+    /**
+     * Toggles players role to reader/guesser.
+     *
+     * @param player Player object representation
+     */
+    private void toggleRole(Player player) {
+        if (player.isReader()) {
+            player.setReader(false);
+        } else {
+            player.setReader(true);
+        }
     }
 
 
-
-
     @Override
-    protected void onDestroy(){
+    protected void onDestroy() {
         super.onDestroy();
         soundPool.release();
         soundPool = null;

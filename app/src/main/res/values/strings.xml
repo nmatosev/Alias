@@ -6,4 +6,30 @@
     <string name="title_activity_list_data">ListDataActivity</string>
     <string name="title_activity_current_score">CurrentScoreActivity</string>
     <string name="title_activity_round_summary">RoundSummaryActivity</string>
+
+    <!--Main activity -->
+    <string name="play">Igraj</string>
+    <string name="settings">Postavke</string>
+    <string name="rules">Pravila</string>
+    <string name="exit">Izlaz</string>
+
+    <!--Gameplay activity -->
+    <string name="start_round">Start</string>
+    <string name="current_round_score">Trenutno bodova u rundi: </string>
+    <string name="correct">Točno</string>
+    <string name="pass">Dalje</string>
+
+    <!--Pop up window -->
+    <string name="player">Igrač:</string>
+    <string name="insert_name">Upiši ime</string>
+    <string name="save">Spremi</string>
+
+    <!--Setting activity-->
+    <string name="round_duration">Trajanje runde</string>
+    <string name="score_to_win">Bodova za pobjedu</string>
+    <string name="default_round_duration">10</string>
+    <string name="default_score_to_win">30</string>
+
+
+
 </resources>

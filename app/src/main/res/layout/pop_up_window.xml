@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
+<android.support.constraint.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     android:id="@+id/pop_up_window"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -21,14 +20,14 @@
             android:textStyle="bold"
             android:layout_margin="15dp"
             android:textSize="20sp"
-            android:text="Igrač:" />
+            android:text="@string/player"/>
 
         <EditText
             android:id="@+id/first_player_edit_text"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:ems="10"
-            android:hint="Upiši ime"
+            android:hint="@string/insert_name"
             android:inputType="textPersonName" />
 
         <Button
@@ -38,7 +37,7 @@
             android:textColor="#000"
             android:textStyle="bold"
             android:textSize="20sp"
-            android:text="Spremi" />
+            android:text="@string/save" />
     </LinearLayout>
 
 </android.support.constraint.ConstraintLayout>

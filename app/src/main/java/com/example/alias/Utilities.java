@@ -12,8 +12,10 @@ public class Utilities {
     }
 
 
-
-
+    /**
+     * Returns SoundPool instance responsible for playing click sounds.
+     * @return SoundPool instance
+     */
     public static SoundPool getSoundPool() {
         SoundPool soundPool;
         if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP){

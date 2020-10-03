@@ -2,8 +2,8 @@
 <ScrollView android:layout_width="match_parent"
     android:layout_height="match_parent"
     xmlns:android="http://schemas.android.com/apk/res/android">
+
     <LinearLayout
-        xmlns:android="http://schemas.android.com/apk/res/android"
         xmlns:tools="http://schemas.android.com/tools"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
@@ -15,18 +15,24 @@
             android:id="@+id/start_game"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_margin="10dp"
+            android:background="@drawable/basic_button"
             android:text="Započni igru" />
 
         <Button
             android:id="@+id/create_new_player_button"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_margin="10dp"
+            android:background="@drawable/basic_button"
             android:text="Dodaj igrača" />
 
         <Button
             android:id="@+id/pair_players_button"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_margin="10dp"
+            android:background="@drawable/basic_button"
             android:text="Upari igrače" />
 
         <TextView

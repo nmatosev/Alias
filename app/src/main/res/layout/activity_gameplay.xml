@@ -1,20 +1,22 @@
 <?xml version="1.0" encoding="utf-8"?>
 <android.support.design.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".GameplayActivity">
+    <!--android:background="@android:color/background_dark"-->
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_margin="30dp"
+        android:background="#00000000"
         android:orientation="vertical">
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:background="#00470D0D"
             android:orientation="horizontal">
 
             <TextView
@@ -22,19 +24,16 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:text="Čita:"
-                android:textColor="#000"
-                android:textSize="15sp"
+                android:textSize="20sp"
                 android:textStyle="bold" />
+            <!--android:textColor="#FFFFFF"-->
 
             <TextView
                 android:id="@+id/text_view_guesser"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:text="Odgovara:"
-                android:textColor="#000"
-                android:textSize="15sp"
+                android:textSize="20sp"
                 android:textStyle="bold" />
 
 
@@ -44,53 +43,50 @@
             android:id="@+id/button_start"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="@drawable/blue_color"
-            android:text="Start"
-             />
+            android:background="@drawable/button_shape"
+            android:layout_marginTop="10dp"
+            android:layout_marginBottom="10dp"
+            android:text="@string/start_round" />
 
         <TextView
             android:id="@+id/text_view_count_down"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:textColor="@drawable/red_color"
-            android:textStyle="bold"
-            android:textSize="30sp"
             android:gravity="center"
-             />
+            android:textColor="@drawable/red_color"
+            android:textSize="30sp"
+            android:textStyle="bold" />
 
         <TextView
             android:id="@+id/text_view_word"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:textStyle="bold"
-            android:textSize="40sp"
-            android:textColor="@drawable/blue_color"
-            android:gravity="center"
-            android:layout_marginBottom="40dp"
             android:layout_marginTop="40dp"
-             />
+            android:layout_marginBottom="40dp"
+            android:gravity="center"
+            android:textColor="@drawable/blue_color"
+            android:textSize="40sp"
+            android:textStyle="bold" />
 
         <TextView
             android:id="@+id/text_view_score"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:textStyle="bold"
-            android:textSize="30sp"
-            android:textColor="@drawable/blue_color"
-            android:gravity="center"
             android:layout_gravity="bottom"
-            android:text="Trenutno bodova u rundi: " />
+            android:gravity="center"
+            android:text="@string/current_round_score"
+            android:textSize="30sp"
+            android:textStyle="bold" />
 
         <TextView
             android:id="@+id/text_view_score_total"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:textStyle="bold"
-            android:textSize="30sp"
-            android:textColor="@drawable/blue_color"
-            android:gravity="center"
             android:layout_gravity="bottom"
-            />
+            android:gravity="center"
+            android:textColor="@drawable/blue_color"
+            android:textSize="30sp"
+            android:textStyle="bold" />
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -98,24 +94,28 @@
             android:orientation="horizontal">
 
             <Button
-                android:id="@+id/button_correct"
-                android:layout_gravity="bottom"
+                android:id="@+id/button_pass"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_gravity="bottom"
                 android:layout_weight="1"
-                android:background="@drawable/green_color"
-                android:text="Točno" />
+                android:background="@drawable/pass_button"
+                android:layout_margin="10dp"
+                android:text="@string/pass" />
 
             <Button
-                android:id="@+id/button_pass"
-                android:layout_gravity="bottom"
+                android:id="@+id/button_correct"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_gravity="bottom"
                 android:layout_weight="1"
-                android:background="@drawable/red_color"
-                android:text="Dalje" />
-        </LinearLayout>
+                android:background="@drawable/correct_button"
+                android:layout_margin="10dp"
+                android:soundEffectsEnabled="true"
+                android:text="@string/correct" />
 
+
+        </LinearLayout>
 
 
     </LinearLayout>

@@ -11,7 +11,7 @@
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Trajanje runde: "
+        android:text="@string/round_duration"
         android:textColor="#000"
         android:textStyle="bold"
         android:layout_margin="15dp"
@@ -25,17 +25,17 @@
         android:ems="10"
         android:layout_margin="15dp"
         android:inputType="number"
-        android:text="30" />
+        android:text="@string/default_round_duration" />
 
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Bodova za pobjedu: "
+        android:text="@string/score_to_win"
         android:textColor="#000"
         android:textStyle="bold"
         android:layout_margin="15dp"
         android:textSize="20sp"
-        android:id="@+id/score_to_win"/>
+        android:id="@+id/default_activity_button"/>
 
     <EditText
         android:id="@+id/score_to_win_edit_text"
@@ -44,14 +44,15 @@
         android:ems="10"
         android:layout_margin="15dp"
         android:inputType="number"
-        android:text="30" />
+        android:text="@string/default_score_to_win" />
 
     <Button
         android:id="@+id/button_save"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_margin="15dp"
-        android:text="Spremi" />
+        android:background="@drawable/basic_button"
+        android:text="@string/save" />
 
 </LinearLayout>
 

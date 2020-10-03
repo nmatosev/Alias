@@ -7,6 +7,9 @@ import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.util.Log;
 
+/**
+ * Class responsible for CRUD operations on Sqlite DB.
+ */
 public  class DatabaseHelper extends SQLiteOpenHelper {
 
     public static final String DATABASE_NAME = "Alias.db";
