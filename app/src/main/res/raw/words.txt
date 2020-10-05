@@ -49,9 +49,8 @@ uho, ukiseljeno, ukoliko, ultimativan, ultimativni, upitnik, uši, uskličnik, u
 vilica, viličar, viljuškar, viljuškast, virtualan, virus, više, visiti, vizualan, vjerojatan, vjerojatno, Vlaho, vodeni, vodni, volio, voljeti, vrata, vražji, vremenom, vremenski, vučji, zagrade,
 zagristi, zagrizen, zahladiti, zahladjeti, zahladniti, zahladnjenje, zahladnjeti, zahlađenje, zahtijevan, zahtjevan, zahvaliti, zahvaliti, zahvaljivati, zajutrak, zamolba, Zanimljivosti,
 žao, zarez, zaspati, zasuti, zbog, zečji, zelenio, zeleniti, zelenjeti, zelenjeti, željeti, Zemlja, zgrudati,
-živio, živiti, živjeti, životinjska, žutiti, žutjeti, đuveđ, zimzelen, Nigerija, Etiopija, Alžir, Jordan, Nizozemska, Andora, Turska, Madagaskar, Kazahstan, Grčka, Irak, Azerbajdžan, Mali, Brunej, Tajland, Bangui,
-Gambija, Basseterre, Austrija, Libanon, Belize, Srbija, Njemačka, Švicarska, Kolumbija, Brazil, Slovačka, Barbados, Belgija, Mađarska, Argentina, Rumunjska,
-Australija, Venezuela, Castries, Cetinje, Meksiko, Colombo, Senegal, Sirija, Tanzanija, Nizozemska, Bangladeš, Tanzanija, Katar, Irska, Tadžikistan, Džibuti, Armenija,
+živio, živiti, živjeti, životinjska, žutiti, žutjeti, đuveđ, zimzelen, Nigerija, Etiopija, Alžir, Jordan, Nizozemska, Andora, Turska, Madagaskar, Kazahstan, Grčka, Irak, Azerbajdžan, Mali, Brunej, Tajland, Bangui, Austrija, Libanon, Belize, Srbija, Njemačka, Švicarska, Kolumbija, Brazil, Slovačka, Barbados, Belgija, Mađarska, Argentina, Rumunjska,
+Australija, Venezuela, Castries, Cetinje, Meksiko, Kolumbo, Senegal, Sirija, Tanzanija, Nizozemska, Bangladeš, Tanzanija, Katar, Irska, Tadžikistan, Džibuti, Armenija,
 Tuvalu, Bocvana, Gvajana, Burundi, Gvatemala, Nizozemska, Vijetnam, Zimbabve, Kuba, Finska, Pakistan, Indonezija, Izrael, Afganistan, Egipat, Uganda, Nepal, Sudan, Ukrajina, Jamajka, Moldavija, Danska, Malezija, Kuvajt, Bolivija, Gabon, Malavi, Peru, Portugal, Togo, London, Angola, Zambija, Luksemburg, Slovenija, Španjolska, Maldivi, Nikaragva,
 Bahrein, Filipini, Mozambik, Bjelorusija, Somalija, Monako, Urugvaj, Rusija, Kenija, Bahami, Indija, Niger, Cipar,
 Norveška, Kanada, Panama, Francuska, Kina, Kambodža, Podgorica, Haiti, Češka, Prag, Pjongjang, Kosovo, Ekvador,
@@ -93,7 +92,21 @@ senzori,senzor,mreža,mreže,element,atoma,molekula,kisik,ugljik,dijamant,grafit
 sredstva,fizika,godina,praznik,radni dan,profesor,nastavnik,Badnjak,Božić,Uskrs,košulja,prijatelj,Nobelova nagrada,borba,operacija,nos,tehnologija,gen,napredak,strana,dokaz,kaput,jakna,obuća,cipele,tenisice,
 događaj,društvo,priroda,hrana,civilizacija,djeca,grana,stablo,amerikanci,ograničenje,granica,trenutak,optimist,pesimist,umjetna inteligencija,električni automobil,interes,zanimljivost,interesirati,
 šah,iskorak,potencijal,svijet,uloga,romantika,realizam,radno mjesto,utopija,podaci,informacija,objekt,razred,advent,zračenje,znanost,znanstvenik,znanastvenici,studenti,prava,studentska prava,svemir,
-globalizacija,ubrzanje,usporavanje,predavanje,vrtić,ormar,bolnica,ljekarna,lijek,doktor,konobar,konobarica,restoran,kafić,stolar,postolar,šegrt Hlapić
+globalizacija,ubrzanje,usporavanje,predavanje,vrtić,ormar,bolnica,ljekarna,lijek,doktor,konobar,konobarica,restoran,kafić,stolar,postolar,šegrt Hlapić,enciklopedija,karburator,torbica,tašnica,atletika,trčanje,
+skok s motkom,skok u vis,kuglanje,curling,klima uređaj,pleme,malo vijeće,veliko vijeće,poglavica,smrad,smaragd,safiri,Miljacka,štreber,šmokljan,osveta,osveta šmokljana,Gospodar prstenova,Linkin Park,kečap,majoneza,
+kalkulator,ping pong,kviz,klingonac,web aplikacija,gangster,greška,grešan,Severina,učiteljice,nastavnici,učitelji,amiš,mapa,Google,guglanje,Donald Trump,dolari,policija,vojska,Snoop Dogg,podzemlje,nadzemlje,
+oluja,olujno nevrijeme,nevrijeme,pas i kost,ubojica,lopov,haški optuženik,igranje,granje,lišće,listići,Mad Max,influenser,zabijanje,pribijanje,pribiti na križ,stup,stup srama,bijednik,prozorski okvir,okvir,objektiv,okular,
+profesionalni fotoaparat,mjenjačnica,Krešo Bengalka,uzorak,kriminal,mafija,kartel,Pablo Escobar,maskirani osvetnik,religija,džamija,sultan,sultanat,kalifat,tajni agent,vjeronauk,mrtva priroda,prešutiti,
+otići daleko,nema veze,izgubiti kontrolu,na kraju,imati na umu,štreberčina,pokušati ponovno,domaća zadaća,domaći rad,ustaše i partizani,slijepo vjerovati,najjače,najslabije,žirafa,Pikachu,kihanje,
+kraljevina,Igra prijestolja,Sedmo carstvo,crna kronika,crna udovica,udovica,udovac,zamašnjak,moment,uhvatiti trenutak,čistiti,uništavati,lijepiti plakat,gramatika,loša gramatika,Zid plača,Oksimoron,biti sretan,jezikova juha,
+mercedes,vanzemaljci,obiteljski ručak,mitologija,kutomjer,Akcije čišćenja,Akcijska ponuda,poliranje,aklimatizacija,analiza,analiziranje,
+filozofija,piton,dinosaur,Jurski park,12 gnjevnih ljudi,Titanic,anagram,otorinolaringologija,anakonda,piton,najdraži film,
+Casablanca,Povratak u budućnost,alpinist,anarhija,anatomski,Android,iphone,Ana Karenjina,Zločin i kazna,kum,vitez,Pakleni Šund,
+Fight Club,Forrest Gump,Matrix,Dobri momci,Kad jaganjci utihnu,Spašavanje vojnika Ryana,Parazit,Privedite osumljičene,Pijanist,
+Psiho,sociopat,psihopat,Gladijator,nedodirljivi,apokalipsa,memento,Joker,Staze slave,Koko u Parizu,3 idiota,Nemilosrdni gadovi,
+lov,sjeverozapad,jugoistok,sjeveroistok,jugozapad,Amelie,Clint Eastwood,Sherlock Holmes,Poirot,ropstvo,crnac,Terminator,anestezija,
+anesteziolog,radiolog,akvarij,masoni,rasizam,šovinizam,antioksidans,duša od čovjeka,duša,ispitivati,reflektor,reflektirati,akrobat,
+akrobacija,cirkus,prvi april,dobar loš zao,arkada,boksač,mali prst,palac,Isus Krist,Muhamed,Mojsije,frapirati,frape
 
 
 

@@ -20,10 +20,10 @@ import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 import java.util.Map;
+import java.util.stream.Collectors;
 
 public class GameplayActivity extends AppCompatActivity {
 
-    private static final String TAG = "GameplayActivity";
     DatabaseHelper databaseHelper;
     Button startButton;
     TextView countDownTextView;
@@ -44,7 +44,6 @@ public class GameplayActivity extends AppCompatActivity {
     int scoreCounter = 0;
     int wordCounter = 0;
     int queue;
-    String roundFinished = "Gotovo runda!";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -57,7 +56,14 @@ public class GameplayActivity extends AppCompatActivity {
         passSound = soundPool.load(this, R.raw.incorrect, 1);
 
         words = parseFile(Constants.WORDS_PATH);
+
+        for (String word : words) {
+            if (word.isEmpty())
+                Log.d("word empty string", "DETECTED EMPTY");
+        }
+
         Log.d("Word count", "Count: " + words.size());
+
 
         Collections.shuffle(words);
         SharedPreferences settingsPreferences = getSharedPreferences("settings_prefs", MODE_PRIVATE);
@@ -157,7 +163,7 @@ public class GameplayActivity extends AppCompatActivity {
                         Team team = teams.get(queue);
                         int total = team.getCurrentScore() + scoreCounter;
                         team.setCurrentScore(total);
-                        countDownTextView.setText(roundFinished);
+                        countDownTextView.setText(Constants.ROUND_FINISHED);
                         startActivity(new Intent(GameplayActivity.this, CurrentScoreActivity.class));
 
                     }
@@ -218,17 +224,20 @@ public class GameplayActivity extends AppCompatActivity {
      * @return parsedQuestions
      */
     public List<String> parseFile(String fileName) {
-        List<String> words = new ArrayList<String>();
+        List<String> words = new ArrayList<>();
         InputStream in = this.getClass().getClassLoader().getResourceAsStream(fileName);
         BufferedReader reader = new BufferedReader(new InputStreamReader(in));
         String lineInFile;
         try {
             while ((lineInFile = reader.readLine()) != null) {
+                Log.d("line in file " , lineInFile);
+                //words = Arrays.asList(lineInFile.split(","));
                 words.addAll(Arrays.asList(lineInFile.split(",")));
             }
         } catch (IOException e) {
             e.printStackTrace();
         }
+        words = words.stream().filter(s->!s.isEmpty()).collect(Collectors.toList());
         Collections.shuffle(words);
         return words;
     }
