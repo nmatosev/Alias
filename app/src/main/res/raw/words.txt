@@ -106,7 +106,7 @@ Fight Club,Forrest Gump,Matrix,Dobri momci,Kad jaganjci utihnu,Spašavanje vojni
 Psiho,sociopat,psihopat,Gladijator,nedodirljivi,apokalipsa,memento,Joker,Staze slave,Koko u Parizu,3 idiota,Nemilosrdni gadovi,
 lov,sjeverozapad,jugoistok,sjeveroistok,jugozapad,Amelie,Clint Eastwood,Sherlock Holmes,Poirot,ropstvo,crnac,Terminator,anestezija,
 anesteziolog,radiolog,akvarij,masoni,rasizam,šovinizam,antioksidans,duša od čovjeka,duša,ispitivati,reflektor,reflektirati,akrobat,
-akrobacija,cirkus,prvi april,dobar loš zao,arkada,boksač,mali prst,palac,Isus Krist,Muhamed,Mojsije,frapirati,frape
+akrobacija,cirkus,prvi april,dobar loš zao,arkada,boksač,mali prst,palac,Isus Krist,Muhamed,Mojsije,frapirati,frape,šalica,klima uređaj
 
 
 

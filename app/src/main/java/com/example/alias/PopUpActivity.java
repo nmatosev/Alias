@@ -29,16 +29,13 @@ public class PopUpActivity extends Activity {
         int height = displayMetrics.heightPixels;
 
         getWindow().setLayout((int) (width * 0.8), (int) (height * 0.6));
-        saveButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                playerName = playerEditText.getText().toString();
-                if (playerName.equals("")) {
-                    showToastMsg("You must write name!");
-                } else {
-                    addData(playerName);
-                    startActivity(new Intent(PopUpActivity.this, PairUpPlayersActivity.class));
-                }
+        saveButton.setOnClickListener(v -> {
+            playerName = playerEditText.getText().toString();
+            if (playerName.equals("")) {
+                showToastMsg("You must write name!");
+            } else {
+                addData(playerName);
+                startActivity(new Intent(PopUpActivity.this, PairUpPlayersActivity.class));
             }
         });
     }
@@ -51,7 +48,7 @@ public class PopUpActivity extends Activity {
     public void addData(String newEntry) {
         boolean insertData = dataBaseHelper.addPlayerData(newEntry);
         if (insertData) {
-            showToastMsg("Players successfuly inserted");
+            showToastMsg("Player successfuly inserted");
         } else {
             showToastMsg("Something went wrong.");
         }

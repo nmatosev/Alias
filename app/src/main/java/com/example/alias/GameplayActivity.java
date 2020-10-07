@@ -5,11 +5,13 @@ import android.content.SharedPreferences;
 import android.media.SoundPool;
 import android.os.Bundle;
 import android.os.CountDownTimer;
+import android.os.Handler;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -33,7 +35,7 @@ public class GameplayActivity extends AppCompatActivity {
     TextView scoreTextView;
     TextView scoreTotalTextView;
     private SoundPool soundPool;
-    int correctSound, passSound;
+    int correctSound, passSound, tickSound, endSound;
 
     Button correctButton;
     Button passButton;
@@ -46,6 +48,11 @@ public class GameplayActivity extends AppCompatActivity {
     int queue;
 
     @Override
+    public void onBackPressed() {
+        Toast.makeText(this, "Cannot go back :(", Toast.LENGTH_SHORT).show();
+    }
+
+    @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_gameplay);
@@ -54,16 +61,13 @@ public class GameplayActivity extends AppCompatActivity {
 
         correctSound = soundPool.load(this, R.raw.correct, 1);
         passSound = soundPool.load(this, R.raw.incorrect, 1);
+        tickSound = soundPool.load(this, R.raw.tick, 1);
+        endSound = soundPool.load(this, R.raw.whistle, 1);
+
 
         words = parseFile(Constants.WORDS_PATH);
 
-        for (String word : words) {
-            if (word.isEmpty())
-                Log.d("word empty string", "DETECTED EMPTY");
-        }
-
         Log.d("Word count", "Count: " + words.size());
-
 
         Collections.shuffle(words);
         SharedPreferences settingsPreferences = getSharedPreferences("settings_prefs", MODE_PRIVATE);
@@ -111,41 +115,35 @@ public class GameplayActivity extends AppCompatActivity {
                 wordTextView.setText(words.get(wordCounter));
                 startButton.setEnabled(false);
 
-                correctButton.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        String currentWord = words.get(wordCounter);
-                        Answer answer = new Answer(currentWord, true);
-                        team.getRoundSummary().get(team.getRound()).add(answer);
+                correctButton.setOnClickListener(v1 -> {
+                    String currentWord = words.get(wordCounter);
+                    Answer answer = new Answer(currentWord, true);
+                    team.getRoundSummary().get(team.getRound()).add(answer);
 
-                        currentWord = words.get(wordCounter += 1);
-                        wordTextView.setText(currentWord);
-                        scoreCounter++;
-                        soundPool.play(correctSound, 1, 1, 0, 0, 1);
+                    currentWord = words.get(wordCounter += 1);
+                    wordTextView.setText(currentWord);
+                    scoreCounter++;
+                    soundPool.play(correctSound, 1, 1, 0, 0, 1);
 
-                        Log.i("Current score", "Score " + scoreCounter + " word cnt " + wordCounter);
-                        String currentScoreMsg = "Trenutni rezultat: " + scoreCounter;
-                        scoreTextView.setText(currentScoreMsg);
+                    Log.i("Current score", "Score " + scoreCounter + " word cnt " + wordCounter);
+                    String currentScoreMsg = "Trenutni rezultat: " + scoreCounter;
+                    scoreTextView.setText(currentScoreMsg);
 
-                    }
                 });
 
-                passButton.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        String currentWord = words.get(wordCounter);
-                        Answer answer = new Answer(currentWord, false);
-                        team.getRoundSummary().get(team.getRound()).add(answer);
+                passButton.setOnClickListener(v2 -> {
+                    String currentWord = words.get(wordCounter);
+                    Answer answer = new Answer(currentWord, false);
+                    team.getRoundSummary().get(team.getRound()).add(answer);
 
-                        currentWord = words.get(wordCounter += 1);
-                        wordTextView.setText(currentWord);
-                        scoreCounter--;
-                        soundPool.play(passSound, 1, 1, 0, 0, 1);
+                    currentWord = words.get(wordCounter += 1);
+                    wordTextView.setText(currentWord);
+                    scoreCounter--;
+                    soundPool.play(passSound, 1, 1, 0, 0, 1);
 
-                        String currentScoreMsg = "Trenutni rezultat " + scoreCounter + " bodova";
-                        scoreTextView.setText(currentScoreMsg);
+                    String currentScoreMsg = "Trenutni rezultat " + scoreCounter + " bodova";
+                    scoreTextView.setText(currentScoreMsg);
 
-                    }
                 });
 
 
@@ -155,6 +153,10 @@ public class GameplayActivity extends AppCompatActivity {
                     @Override
                     public void onTick(long millisUntilFinished) {
                         countDownTextView.setText(String.valueOf(counter));
+                        if (counter <= 10) {
+                            soundPool.play(tickSound, 1, 1, 0, 0, 1);
+                        }
+                        Log.d("Counter", "Ticks " + counter);
                         counter--;
                     }
 
@@ -164,6 +166,7 @@ public class GameplayActivity extends AppCompatActivity {
                         int total = team.getCurrentScore() + scoreCounter;
                         team.setCurrentScore(total);
                         countDownTextView.setText(Constants.ROUND_FINISHED);
+                        soundPool.play(endSound, 1, 1, 0, 0, 1);
                         startActivity(new Intent(GameplayActivity.this, CurrentScoreActivity.class));
 
                     }
@@ -230,14 +233,13 @@ public class GameplayActivity extends AppCompatActivity {
         String lineInFile;
         try {
             while ((lineInFile = reader.readLine()) != null) {
-                Log.d("line in file " , lineInFile);
-                //words = Arrays.asList(lineInFile.split(","));
+                Log.d("line in file ", lineInFile);
                 words.addAll(Arrays.asList(lineInFile.split(",")));
             }
         } catch (IOException e) {
             e.printStackTrace();
         }
-        words = words.stream().filter(s->!s.isEmpty()).collect(Collectors.toList());
+        words = words.stream().filter(s -> !s.isEmpty()).collect(Collectors.toList());
         Collections.shuffle(words);
         return words;
     }

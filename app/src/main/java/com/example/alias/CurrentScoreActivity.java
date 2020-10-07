@@ -6,6 +6,7 @@ import android.content.SharedPreferences;
 import android.graphics.drawable.Drawable;
 import android.media.SoundPool;
 import android.os.Bundle;
+import android.os.Handler;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
@@ -18,6 +19,7 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import java.util.HashMap;
 import java.util.List;
@@ -38,6 +40,12 @@ public class CurrentScoreActivity extends AppCompatActivity {
     SoundPool soundPool;
     String mainMenu = "Glavni meni";
     String continueGame = "Nastavi";
+    int cheerSound;
+
+    @Override
+    public void onBackPressed() {
+        Toast.makeText(this, "Cannot go back :(", Toast.LENGTH_SHORT).show();
+    }
 
 
     @Override
@@ -47,6 +55,9 @@ public class CurrentScoreActivity extends AppCompatActivity {
         buttonNextPair = (Button) findViewById(R.id.button_next_pair);
         roundTextView = (TextView) findViewById(R.id.round_text_view);
         teamResultTextView = (TextView) findViewById(R.id.pair_result_text_view);
+        soundPool = Utilities.getSoundPool();
+        cheerSound = soundPool.load(this, R.raw.correct, 1);
+
 
         int queue = CurrentGameEntity.getInstance().getTeamQueue();
 
@@ -56,7 +67,6 @@ public class CurrentScoreActivity extends AppCompatActivity {
         Team team = teams.get(queue);
         int round = team.getRound();
 
-        soundPool = Utilities.getSoundPool();
 
         String teamName = team.getTeamName();
 
@@ -77,9 +87,10 @@ public class CurrentScoreActivity extends AppCompatActivity {
             String winnersMsg = "Pobjednici " + winners.getTeamName() + " ! ";
             teamResultTextView.setText(winnersMsg);
             isFinished = true;
+
             for (Map.Entry<Integer, Team> t : CurrentGameEntity.getInstance().getTeams().entrySet()) {
                 t.getValue().setCurrentScore(0);
-                t.getValue().setRoundSummary(new HashMap<Integer, List<Answer>>());
+                t.getValue().setRoundSummary(new HashMap<>());
                 t.getValue().setRound(0);
             }
 
@@ -97,22 +108,11 @@ public class CurrentScoreActivity extends AppCompatActivity {
         }
 
         if (isFinished) {
-
             buttonNextPair.setText(mainMenu);
-            buttonNextPair.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    startActivity(new Intent(CurrentScoreActivity.this, MainActivity.class));
-                }
-            });
+            buttonNextPair.setOnClickListener(v -> startActivity(new Intent(CurrentScoreActivity.this, MainActivity.class)));
         } else {
             buttonNextPair.setText(continueGame);
-            buttonNextPair.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    startActivity(new Intent(CurrentScoreActivity.this, GameplayActivity.class));
-                }
-            });
+            buttonNextPair.setOnClickListener(v -> startActivity(new Intent(CurrentScoreActivity.this, GameplayActivity.class)));
         }
     }
 

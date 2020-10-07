@@ -27,33 +27,10 @@ public class MainActivity extends AppCompatActivity {
         rulesButton = (Button) findViewById(R.id.button_rules);
         settingsButton = (Button) findViewById(R.id.button_settings);
         exitButton = (Button) findViewById(R.id.button_exit);
-        pairUpPlayersButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                startActivity(new Intent(MainActivity.this, PairUpPlayersActivity.class));
-            }
-        });
-
-        rulesButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                startActivity(new Intent(MainActivity.this, RulesActivity.class));
-            }
-        });
-
-        settingsButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                startActivity(new Intent(MainActivity.this, SettingsActivity.class));
-            }
-        });
-
-        exitButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                System.exit(0);
-            }
-        });
+        pairUpPlayersButton.setOnClickListener(v -> startActivity(new Intent(MainActivity.this, PairUpPlayersActivity.class)));
+        rulesButton.setOnClickListener(v -> startActivity(new Intent(MainActivity.this, RulesActivity.class)));
+        settingsButton.setOnClickListener(v -> startActivity(new Intent(MainActivity.this, SettingsActivity.class)));
+        exitButton.setOnClickListener(v -> System.exit(0));
     }
 
 
