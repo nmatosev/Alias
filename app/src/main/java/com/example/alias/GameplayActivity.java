@@ -22,6 +22,7 @@ import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 import java.util.stream.Collectors;
 
 public class GameplayActivity extends AppCompatActivity {
@@ -118,7 +119,7 @@ public class GameplayActivity extends AppCompatActivity {
                 correctButton.setOnClickListener(v1 -> {
                     String currentWord = words.get(wordCounter);
                     Answer answer = new Answer(currentWord, true);
-                    team.getRoundSummary().get(team.getRound()).add(answer);
+                    Objects.requireNonNull(team.getRoundSummary().get(team.getRound())).add(answer);
 
                     currentWord = words.get(wordCounter += 1);
                     wordTextView.setText(currentWord);
@@ -134,7 +135,7 @@ public class GameplayActivity extends AppCompatActivity {
                 passButton.setOnClickListener(v2 -> {
                     String currentWord = words.get(wordCounter);
                     Answer answer = new Answer(currentWord, false);
-                    team.getRoundSummary().get(team.getRound()).add(answer);
+                    Objects.requireNonNull(team.getRoundSummary().get(team.getRound())).add(answer);
 
                     currentWord = words.get(wordCounter += 1);
                     wordTextView.setText(currentWord);

@@ -106,7 +106,16 @@ Fight Club,Forrest Gump,Matrix,Dobri momci,Kad jaganjci utihnu,Spašavanje vojni
 Psiho,sociopat,psihopat,Gladijator,nedodirljivi,apokalipsa,memento,Joker,Staze slave,Koko u Parizu,3 idiota,Nemilosrdni gadovi,
 lov,sjeverozapad,jugoistok,sjeveroistok,jugozapad,Amelie,Clint Eastwood,Sherlock Holmes,Poirot,ropstvo,crnac,Terminator,anestezija,
 anesteziolog,radiolog,akvarij,masoni,rasizam,šovinizam,antioksidans,duša od čovjeka,duša,ispitivati,reflektor,reflektirati,akrobat,
-akrobacija,cirkus,prvi april,dobar loš zao,arkada,boksač,mali prst,palac,Isus Krist,Muhamed,Mojsije,frapirati,frape,šalica,klima uređaj
+akrobacija,cirkus,prvi april,dobar loš zao,arkada,boksač,mali prst,palac,Isus Krist,Muhamed,Mojsije,frapirati,frape,šalica,klima uređaj,novčanik,milosrdan,crni novčanik,kožna jakna,
+pazar,veliki pazar,mali pazar,profil,Instagram,Facebook,parfem,kolonjska vodica,toalet,tortilja,slušalice,Šiljo,Pluton,Jupiter,Saturn,Venera,Mars,prašina,suvenir,vaza,plava vaza,
+dimnjačar,dimnjak,dim,bijeli dim,crni dim,dimije,hlače,donje rublje,grudnjak,vuk,lopov,osiguranje,životno osiguranje,putno osiguranje,razasut,crvene oči,plave oči,zelene oči,
+svjedok,svjedok optužnice,nasumično,prijevara,zatrpan,lavina,krenuti,Goran Bare,ostatak,total,suma,razlika,umnožak,Zagrebačka banka,Splitska banka,zahtjev za kredit,taksist,žuti taksi,eko taksi,
+blokada,trijumf,bitak,odgoda,ovrha,telegram,rast i pad,najbogatiji,bogatiji,bogat,siromašan,siromašniji,najsiromašniji,ispolirati,polirati,kreditna kartica,musav,sigurnost,najsigurniji,
+najnesigurniji,psovati,psovka,kleveta,glad,gladan,najgladniji,najžedniji,čokolada s lješnjacima,pahuljice,zobene pahuljice,Jelena Rozga,Petar Grašo,lijekovi,zadaćnice,gospodarstvo,
+šaputanja,krici,porezna kartica,blagostanje,profit,provizija,rastava,vjenačanja,roditelji i djeca,predškolac,dojenčad,oprema,potpomognuta oplodnja,oplodnja,psihologija,filozofija,
+duhovnost,poljoprivreda,prirodne znanosti,dijaspora,sveučilište,film i glazba,književnost,treš,stomatologija,zubar,fotoalbum,vrt,sam svoj majstor,dekorativna kozmetika,kozmetika,
+kompjutorske igre,laboratorij,laborant,turska kava,signal
+
 
 
 

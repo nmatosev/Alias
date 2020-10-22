@@ -170,8 +170,10 @@ public class CurrentScoreActivity extends AppCompatActivity {
         for (int i = 0; i < teams.size() - 1; i++) {
             Team current = teams.get(i);
             Team nextOne = teams.get(i + 1);
-            if (current.getRound() != nextOne.getRound()) {
-                return false;
+            if (nextOne != null && current != null) {
+                if (current.getRound() != nextOne.getRound()) {
+                    return false;
+                }
             }
         }
         Log.d("WinnerCheck", "All teams have equal number of rounds");
