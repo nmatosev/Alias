@@ -32,7 +32,6 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     public void onCreate(SQLiteDatabase db) {
         String createPlayersTable = "CREATE TABLE " + PLAYERS_TABLE + " (ID INTEGER PRIMARY KEY AUTOINCREMENT, " + COL_2 + " TEXT)";
         String createTeamTable = "CREATE TABLE " + TEAMS_TABLE + " (ID INTEGER PRIMARY KEY AUTOINCREMENT, PLAYER1 TEXT, PLAYER2 TEXT)";
-        Log.d("db creation", "succ ");
         db.execSQL(createPlayersTable);
         db.execSQL(createTeamTable);
     }

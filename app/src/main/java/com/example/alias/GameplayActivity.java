@@ -68,7 +68,7 @@ public class GameplayActivity extends AppCompatActivity {
 
         words = parseFile(Constants.WORDS_PATH);
 
-        Log.d("Word count", "Count: " + words.size());
+        Log.d("Total word count", "Count: " + words.size());
 
         Collections.shuffle(words);
         SharedPreferences settingsPreferences = getSharedPreferences("settings_prefs", MODE_PRIVATE);

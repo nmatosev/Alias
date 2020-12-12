@@ -21,6 +21,11 @@ android {
         sourceCompatibility JavaVersion.VERSION_1_8
         targetCompatibility JavaVersion.VERSION_1_8
     }
+    testOptions {
+        unitTests {
+            includeAndroidResources = true
+        }
+    }
 }
 
 dependencies {
@@ -32,5 +37,6 @@ dependencies {
     androidTestImplementation 'com.android.support.test:runner:1.0.2'
     androidTestImplementation 'com.android.support.test.espresso:espresso-core:3.0.2'
     coreLibraryDesugaring 'com.android.tools:desugar_jdk_libs:1.0.6'
+    testImplementation 'org.robolectric:robolectric:4.0'
 
 }

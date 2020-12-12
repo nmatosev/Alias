@@ -99,7 +99,7 @@ oluja,olujno nevrijeme,nevrijeme,pas i kost,ubojica,lopov,haški optuženik,igra
 profesionalni fotoaparat,mjenjačnica,Krešo Bengalka,uzorak,kriminal,mafija,kartel,Pablo Escobar,maskirani osvetnik,religija,džamija,sultan,sultanat,kalifat,tajni agent,vjeronauk,mrtva priroda,prešutiti,
 otići daleko,nema veze,izgubiti kontrolu,na kraju,imati na umu,štreberčina,pokušati ponovno,domaća zadaća,domaći rad,ustaše i partizani,slijepo vjerovati,najjače,najslabije,žirafa,Pikachu,kihanje,
 kraljevina,Igra prijestolja,Sedmo carstvo,crna kronika,crna udovica,udovica,udovac,zamašnjak,moment,uhvatiti trenutak,čistiti,uništavati,lijepiti plakat,gramatika,loša gramatika,Zid plača,Oksimoron,biti sretan,jezikova juha,
-mercedes,vanzemaljci,obiteljski ručak,mitologija,kutomjer,Akcije čišćenja,Akcijska ponuda,poliranje,aklimatizacija,analiza,analiziranje,
+mercedes,vanzemaljci,obiteljski ručak,topli ručak,obiteljska večera,božićni ručak,mitologija,kutomjer,Akcije čišćenja,Akcijska ponuda,poliranje,aklimatizacija,analiza,analiziranje,
 filozofija,piton,dinosaur,Jurski park,12 gnjevnih ljudi,Titanic,anagram,otorinolaringologija,anakonda,piton,najdraži film,
 Casablanca,Povratak u budućnost,alpinist,anarhija,anatomski,Android,iphone,Ana Karenjina,Zločin i kazna,kum,vitez,Pakleni Šund,
 Fight Club,Forrest Gump,Matrix,Dobri momci,Kad jaganjci utihnu,Spašavanje vojnika Ryana,Parazit,Privedite osumljičene,Pijanist,
@@ -114,7 +114,14 @@ blokada,trijumf,bitak,odgoda,ovrha,telegram,rast i pad,najbogatiji,bogatiji,boga
 najnesigurniji,psovati,psovka,kleveta,glad,gladan,najgladniji,najžedniji,čokolada s lješnjacima,pahuljice,zobene pahuljice,Jelena Rozga,Petar Grašo,lijekovi,zadaćnice,gospodarstvo,
 šaputanja,krici,porezna kartica,blagostanje,profit,provizija,rastava,vjenačanja,roditelji i djeca,predškolac,dojenčad,oprema,potpomognuta oplodnja,oplodnja,psihologija,filozofija,
 duhovnost,poljoprivreda,prirodne znanosti,dijaspora,sveučilište,film i glazba,književnost,treš,stomatologija,zubar,fotoalbum,vrt,sam svoj majstor,dekorativna kozmetika,kozmetika,
-kompjutorske igre,laboratorij,laborant,turska kava,signal
+kompjutorske igre,laboratorij,laborant,turska kava,signal,plakati,plakanje,suza,maska,maskenbal,pametna klupa,Đakovo,Slavonski Brod,Nova Gradiška,senzor,senzori,GPS,stručni stožer,
+zeleni aktivisti,Ivan Pernar,Sisačko-moslovačka županija,Ličko-senjska županija,Zagrebačka županija,Istarska županija,nasljeđe,župan,facebook zid,art studio,Apokalipsa danas,Prometna nesreća,Prva pomoć,
+tehnički potkovan,potkovan,gledatelji,tetka,strina,nositelj,generacija,napustiti,prekinuti,recesija,represija,represivni aparat,teorija i praksa,privatni sektor,javni sektor,
+akvizicija,malouman,iskustvo,grafički dizajner,grafika,grafička kartica,poduzetništvo,malo poduzetništvo,veliko poduzetništvo,korporacija,instinkt,spektar,šampon,kupka,sapun,
+globalno tržište,tržište,lokal,lokalni pljuskovi,oborine,generacijski jaz,hit,hitovi,glazbeni hit,filmski hit,matematika,računanje,revolucionarni izum,svadbena svečanost,svadba,vjenčanje,
+centrifuga,centrifugalna sila,pravilnik,drugovi,izdajice,kafana,lopovluk,lopov,orašasti plodovi,Orašar,veličanstvo,madrac,upute stožera,indikacije,Fatalna žena,zlato i srebro,umjetnine,
+vojna škola,strukovna škola,gimnazija,književni kritičar,spodoba,filmski kritičar,kritičar,pisac,pjesnik,književnik,šumski put,zec i lisica,Crvenkapica,Pepeljuga,moratorij
+
 
 
 
