@@ -120,7 +120,14 @@ tehnički potkovan,potkovan,gledatelji,tetka,strina,nositelj,generacija,napustit
 akvizicija,malouman,iskustvo,grafički dizajner,grafika,grafička kartica,poduzetništvo,malo poduzetništvo,veliko poduzetništvo,korporacija,instinkt,spektar,šampon,kupka,sapun,
 globalno tržište,tržište,lokal,lokalni pljuskovi,oborine,generacijski jaz,hit,hitovi,glazbeni hit,filmski hit,matematika,računanje,revolucionarni izum,svadbena svečanost,svadba,vjenčanje,
 centrifuga,centrifugalna sila,pravilnik,drugovi,izdajice,kafana,lopovluk,lopov,orašasti plodovi,Orašar,veličanstvo,madrac,upute stožera,indikacije,Fatalna žena,zlato i srebro,umjetnine,
-vojna škola,strukovna škola,gimnazija,književni kritičar,spodoba,filmski kritičar,kritičar,pisac,pjesnik,književnik,šumski put,zec i lisica,Crvenkapica,Pepeljuga,moratorij
+vojna škola,strukovna škola,gimnazija,književni kritičar,spodoba,filmski kritičar,kritičar,pisac,pjesnik,književnik,šumski put,zec i lisica,Crvenkapica,Pepeljuga,moratorij,gel za tuširanje,tuširanje,gel,
+žohar,vreća za smeće,crveni koralji,srebrna strijela,luk i strijela,koplje,ratnici,ratnik,ratar,poljoprivrednik,aktivnost,neaktivnost,recesija,nekretnine,mozaik,kolumna,slava,Splitsko-dalmatinska županija,generacija,
+vitamini i minerali,željezo,aluminij,plamenik,bacač plamena,pokemoni,festival,sloboda,ropstvo,12 godina ropstva,mačke i psi,dizajner,tulum,party,zabava,društvene mreže,trgovački centar,kuharica,
+ažurirati,ponoviti,uljepšati,ukvariti,pokvariti,razmaziti,razderati,derati,vrištati,noć vještica,deranje,vriskovi,vrisnuti,svisnuti,jauk,škrgut zubi,luđak,ludovati,glupirati se,bolovati,
+razboljeti se,razno,prazno,praznina,ljetos,zimus,proljetni san,ružan san,lijep san,sanjati,ljubovati,preljubnik,varioc,škver,brodogradilište,rezalište,Ko to tamo peva,
+pionir,junior,senior,zubalo,vađenje zuba,aparatić za zube,vepar,nepar
+
+
 
 
 
