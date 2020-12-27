@@ -20,9 +20,11 @@ import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
+import java.util.Set;
 import java.util.stream.Collectors;
 
 public class GameplayActivity extends AppCompatActivity {
@@ -65,12 +67,12 @@ public class GameplayActivity extends AppCompatActivity {
         tickSound = soundPool.load(this, R.raw.tick, 1);
         endSound = soundPool.load(this, R.raw.whistle, 1);
 
-
+        parseTestFile("res/raw/test.txt");
         words = parseFile(Constants.WORDS_PATH);
 
         Log.d("Total word count", "Count: " + words.size());
 
-        Collections.shuffle(words);
+        //Collections.shuffle(words);
         SharedPreferences settingsPreferences = getSharedPreferences("settings_prefs", MODE_PRIVATE);
         SharedPreferences.Editor editor = getSharedPreferences("score_prefs", MODE_PRIVATE).edit();
         editor.putInt("score", scoreCounter);
@@ -100,7 +102,6 @@ public class GameplayActivity extends AppCompatActivity {
         player1 = team.getPlayer1();
         player2 = team.getPlayer2();
 
-
         setReaderGuesser(player1, player2);
 
         String totalScore = "Ukupno: " + team.getCurrentScore();
@@ -113,6 +114,7 @@ public class GameplayActivity extends AppCompatActivity {
 
             @Override
             public void onClick(View v) {
+
                 wordTextView.setText(words.get(wordCounter));
                 startButton.setEnabled(false);
 
@@ -179,6 +181,8 @@ public class GameplayActivity extends AppCompatActivity {
         toggleRole(player2);
     }
 
+
+
     /**
      * Sets reader/guesser text views in GUI
      *
@@ -222,6 +226,29 @@ public class GameplayActivity extends AppCompatActivity {
 
 
     /**
+     * Parses test file in case there is any
+     * @param fileName
+     */
+    private void parseTestFile(String fileName) {
+
+        List<String> words = new ArrayList<>();
+        InputStream in = this.getClass().getClassLoader().getResourceAsStream(fileName);
+        BufferedReader reader = new BufferedReader(new InputStreamReader(in));
+        String lineInFile;
+        try {
+            while ((lineInFile = reader.readLine()) != null) {
+                Log.d("line in file ", lineInFile);
+                words.addAll(Arrays.asList(lineInFile.split(",")));
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        Log.d("test words ", words.toString());
+
+    }
+
+
+    /**
      * Parses raw file with questions and stores them in a list.
      *
      * @param fileName source file where questions are stored.
@@ -240,9 +267,37 @@ public class GameplayActivity extends AppCompatActivity {
         } catch (IOException e) {
             e.printStackTrace();
         }
+        Log.d("List size", "words count " + words.size());
+
+        //removes empty strings
         words = words.stream().filter(s -> !s.isEmpty()).collect(Collectors.toList());
+
+        //remove duplicates
+        Set<String> removedDuplicates = new HashSet<>(words);
+
+        checkDuplicates(words, removedDuplicates);
+
+        Log.d("Set size", "words count " + removedDuplicates.size());
+
+        words.clear();
+        words.addAll(removedDuplicates);
         Collections.shuffle(words);
         return words;
+    }
+
+    /**
+     * Logs all duplicates
+     * @param words
+     * @param removedDuplicates
+     */
+    private void checkDuplicates(List<String> words, Set<String> removedDuplicates) {
+        List<String> duplicates = new ArrayList<>();
+        for(String word:words){
+            if(!removedDuplicates.contains(word)){
+                duplicates.add(word);
+            }
+        }
+        Log.d("Duplikati", duplicates.toString());
     }
 
 
