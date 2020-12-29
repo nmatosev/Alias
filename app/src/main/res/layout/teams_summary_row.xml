@@ -16,13 +16,6 @@
             android:layout_height="match_parent"
             android:orientation="horizontal">
 
-            <ImageView
-                android:layout_width="25dp"
-                android:id="@+id/image_view_trash"
-                android:layout_height="25dp"
-                android:layout_margin="15dp"
-                android:src="@mipmap/trash" />
-
             <TextView
                 android:id="@+id/text_view_pairs"
                 android:layout_width="match_parent"
@@ -32,7 +25,7 @@
                 android:background="@drawable/selector"
                 android:textColor="#000"
                 android:textSize="20sp"
-                android:textStyle="bold" />
+                />
 
         </LinearLayout>
     </LinearLayout>

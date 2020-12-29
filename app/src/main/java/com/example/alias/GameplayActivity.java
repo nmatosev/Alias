@@ -72,7 +72,6 @@ public class GameplayActivity extends AppCompatActivity {
 
         Log.d("Total word count", "Count: " + words.size());
 
-        //Collections.shuffle(words);
         SharedPreferences settingsPreferences = getSharedPreferences("settings_prefs", MODE_PRIVATE);
         SharedPreferences.Editor editor = getSharedPreferences("score_prefs", MODE_PRIVATE).edit();
         editor.putInt("score", scoreCounter);
@@ -243,7 +242,7 @@ public class GameplayActivity extends AppCompatActivity {
         } catch (IOException e) {
             e.printStackTrace();
         }
-        Log.d("test words ", words.toString());
+        Log.d("Alias words - tests", words.toString());
 
     }
 
@@ -267,18 +266,19 @@ public class GameplayActivity extends AppCompatActivity {
         } catch (IOException e) {
             e.printStackTrace();
         }
-        Log.d("List size", "words count " + words.size());
+        Log.d("Alias words - List size", "words count " + words.size());
 
-        //removes empty strings
-        words = words.stream().filter(s -> !s.isEmpty()).collect(Collectors.toList());
+        //trims and removes empty strings
+        words = words.stream().map(String::trim).filter(s -> !s.isEmpty()).collect(Collectors.toList());
 
         //remove duplicates
         Set<String> removedDuplicates = new HashSet<>(words);
 
         checkDuplicates(words, removedDuplicates);
 
-        Log.d("Set size", "words count " + removedDuplicates.size());
+        Log.d("Alias words - Set size", "words count " + removedDuplicates.size());
 
+        //clear list and add removed duplicates set to empty list
         words.clear();
         words.addAll(removedDuplicates);
         Collections.shuffle(words);
@@ -291,13 +291,20 @@ public class GameplayActivity extends AppCompatActivity {
      * @param removedDuplicates
      */
     private void checkDuplicates(List<String> words, Set<String> removedDuplicates) {
-        List<String> duplicates = new ArrayList<>();
+        Log.d("Check dupl", "list size " + words.size() + " set size " + removedDuplicates.size());
+
+        final Set<String> duplicates = new HashSet<>();
+        final Set<String> checkSet = new HashSet<>();
+
         for(String word:words){
-            if(!removedDuplicates.contains(word)){
+            word = word.toLowerCase();
+            if(!checkSet.add(word)){
                 duplicates.add(word);
             }
         }
-        Log.d("Duplikati", duplicates.toString());
+        Log.d("Alias words - Duplicates", duplicates.toString());
+        Log.d("Alias words - Duplicates size", "Duplicates " + duplicates.size());
+
     }
 
 

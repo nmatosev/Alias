@@ -15,6 +15,16 @@ public class Team {
     private String teamName;
     private Player player1;
     private Player player2;
+    private int currentScore;
+    private int finalScore;
+
+    public int getFinalScore() {
+        return finalScore;
+    }
+
+    public void setFinalScore(int finalScore) {
+        this.finalScore = finalScore;
+    }
 
     public Player getPlayer1() {
         return player1;
@@ -63,7 +73,6 @@ public class Team {
     }
 
 
-    private int currentScore;
 
     public int getCurrentScore() {
         return currentScore;

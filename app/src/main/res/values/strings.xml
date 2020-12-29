@@ -34,6 +34,8 @@
     <string name="rules_desc">Igra Alias igra se u parovima. Jedan igrač drugome objašnjava pojmove onako
         kako mu izlaze na ekranu. Cilj je u zadanom vremenu pogoditi što više pojmova. Zabranjeno je koristiti korijen riječi prilikom objašnjavanja.
     </string>
+    <string name="game_summary">Rezultat:</string>
+    <string name="main_menu">Glavni meni</string>
 
 
 </resources>

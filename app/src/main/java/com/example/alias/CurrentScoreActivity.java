@@ -6,7 +6,6 @@ import android.content.SharedPreferences;
 import android.graphics.drawable.Drawable;
 import android.media.SoundPool;
 import android.os.Bundle;
-import android.os.Handler;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
@@ -38,7 +37,7 @@ public class CurrentScoreActivity extends AppCompatActivity {
     TextView wordTextView;
     SummaryAdapter summaryAdapter;
     SoundPool soundPool;
-    String mainMenu = "Glavni meni";
+    String gameSummary = "Rezultati";
     String continueGame = "Nastavi";
     int cheerSound;
 
@@ -56,8 +55,7 @@ public class CurrentScoreActivity extends AppCompatActivity {
         roundTextView = (TextView) findViewById(R.id.round_text_view);
         teamResultTextView = (TextView) findViewById(R.id.pair_result_text_view);
         soundPool = Utilities.getSoundPool();
-        cheerSound = soundPool.load(this, R.raw.correct, 1);
-
+        cheerSound = soundPool.load(this, R.raw.cheer, 1);
 
         int queue = CurrentGameEntity.getInstance().getTeamQueue();
 
@@ -66,7 +64,6 @@ public class CurrentScoreActivity extends AppCompatActivity {
         queue = queue % numberOfTeams;
         Team team = teams.get(queue);
         int round = team.getRound();
-
 
         String teamName = team.getTeamName();
 
@@ -84,14 +81,16 @@ public class CurrentScoreActivity extends AppCompatActivity {
 
         boolean isFinished = false;
         if (checkIfThereIsAWinner()) {
-            String winnersMsg = "Pobjednici " + winners.getTeamName() + " ! ";
+            String winnersMsg = "Pobjednici " + winners.getPlayer1().getName() + " i " + winners.getPlayer2().getName() + "! ";
             teamResultTextView.setText(winnersMsg);
             isFinished = true;
 
-            for (Map.Entry<Integer, Team> t : CurrentGameEntity.getInstance().getTeams().entrySet()) {
-                t.getValue().setCurrentScore(0);
-                t.getValue().setRoundSummary(new HashMap<>());
-                t.getValue().setRound(0);
+            for (Map.Entry<Integer, Team> entry : CurrentGameEntity.getInstance().getTeams().entrySet()) {
+                Team currTeam = entry.getValue();
+                currTeam.setFinalScore(entry.getValue().getCurrentScore());
+                currTeam.setCurrentScore(0);
+                currTeam.setRoundSummary(new HashMap<>());
+                currTeam.setRound(0);
             }
 
         } else {
@@ -108,8 +107,12 @@ public class CurrentScoreActivity extends AppCompatActivity {
         }
 
         if (isFinished) {
-            buttonNextPair.setText(mainMenu);
-            buttonNextPair.setOnClickListener(v -> startActivity(new Intent(CurrentScoreActivity.this, MainActivity.class)));
+            buttonNextPair.setText(gameSummary);
+            soundPool.play(cheerSound, 1, 1, 0, 0, 1);
+            buttonNextPair.setOnClickListener(v -> {
+                soundPool.play(cheerSound, 1, 1, 0, 0, 1);
+                startActivity(new Intent(CurrentScoreActivity.this, FinalActivity.class));
+            });
         } else {
             buttonNextPair.setText(continueGame);
             buttonNextPair.setOnClickListener(v -> startActivity(new Intent(CurrentScoreActivity.this, GameplayActivity.class)));
@@ -191,7 +194,7 @@ public class CurrentScoreActivity extends AppCompatActivity {
 
         Log.d("WinnerCheck", "Currently best " + winners.getTeamName() + " " + winners.getCurrentScore());
 
-        //checks if best team has enough points to win
+        //checks if best team has enough points to cheer
         if (winners != null && winners.getCurrentScore() >= scoreToWin) {
             Log.d("WinnerCheck", "Winner decided " + winners.getTeamName() + " " + winners.getCurrentScore());
             return true;
