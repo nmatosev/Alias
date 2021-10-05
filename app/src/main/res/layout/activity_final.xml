@@ -5,7 +5,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".FinalActivity"
+    tools:context=".activities.FinalActivity"
     android:orientation="vertical"
     >
     <TextView

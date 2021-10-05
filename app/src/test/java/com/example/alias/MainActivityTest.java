@@ -1,7 +1,11 @@
 package com.example.alias;
 
 import android.content.Intent;
-import android.os.Build;
+
+import com.example.alias.activities.MainActivity;
+import com.example.alias.activities.PairUpPlayersActivity;
+import com.example.alias.activities.RulesActivity;
+import com.example.alias.activities.SettingsActivity;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -10,8 +14,8 @@ import org.robolectric.Robolectric;
 import org.robolectric.RobolectricTestRunner;
 import org.robolectric.RuntimeEnvironment;
 import org.robolectric.Shadows;
-import org.robolectric.android.controller.ActivityController;
 import org.robolectric.annotation.Config;
+
 import static org.junit.Assert.*;
 
 

@@ -3,13 +3,12 @@
     android:layout_height="match_parent"
     xmlns:android="http://schemas.android.com/apk/res/android">
 
-    <LinearLayout
-        xmlns:tools="http://schemas.android.com/tools"
+    <LinearLayout xmlns:tools="http://schemas.android.com/tools"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical"
         android:gravity="center"
-        tools:context=".PairUpPlayersActivity">
+        tools:context=".activities.PairUpPlayersActivity">
 
         <Button
             android:id="@+id/start_game"

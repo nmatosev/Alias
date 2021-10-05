@@ -1,4 +1,4 @@
-package com.example.alias;
+package com.example.alias.activities;
 
 import android.content.Context;
 import android.content.DialogInterface;
@@ -20,6 +20,12 @@ import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import com.example.alias.utils.DatabaseHelper;
+import com.example.alias.R;
+import com.example.alias.entities.CurrentGameEntity;
+import com.example.alias.entities.Player;
+import com.example.alias.entities.Team;
 
 import java.util.ArrayList;
 import java.util.LinkedList;

@@ -1,6 +1,5 @@
-package com.example.alias;
+package com.example.alias.entities;
 
-import java.util.Map;
 import java.util.TreeMap;
 
 public class CurrentGameEntity {

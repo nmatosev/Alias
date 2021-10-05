@@ -1,13 +1,15 @@
-package com.example.alias;
+package com.example.alias.activities;
 
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.DisplayMetrics;
-import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
+
+import com.example.alias.utils.DatabaseHelper;
+import com.example.alias.R;
 
 public class PopUpActivity extends Activity {
 

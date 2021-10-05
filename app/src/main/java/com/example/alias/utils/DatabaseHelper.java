@@ -1,4 +1,4 @@
-package com.example.alias;
+package com.example.alias.utils;
 
 import android.content.ContentValues;
 import android.content.Context;

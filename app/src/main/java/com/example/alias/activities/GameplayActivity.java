@@ -1,17 +1,25 @@
-package com.example.alias;
+package com.example.alias.activities;
 
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.media.SoundPool;
 import android.os.Bundle;
 import android.os.CountDownTimer;
-import android.os.Handler;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import com.example.alias.utils.Constants;
+import com.example.alias.utils.DatabaseHelper;
+import com.example.alias.R;
+import com.example.alias.utils.Utilities;
+import com.example.alias.entities.Answer;
+import com.example.alias.entities.CurrentGameEntity;
+import com.example.alias.entities.Player;
+import com.example.alias.entities.Team;
 
 import java.io.BufferedReader;
 import java.io.IOException;

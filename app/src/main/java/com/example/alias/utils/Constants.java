@@ -1,4 +1,4 @@
-package com.example.alias;
+package com.example.alias.utils;
 
 public class Constants {
 

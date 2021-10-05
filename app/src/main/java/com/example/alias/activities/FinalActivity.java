@@ -1,4 +1,4 @@
-package com.example.alias;
+package com.example.alias.activities;
 
 import android.content.Context;
 import android.content.Intent;
@@ -13,6 +13,10 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ListView;
 import android.widget.TextView;
+
+import com.example.alias.R;
+import com.example.alias.entities.CurrentGameEntity;
+import com.example.alias.entities.Team;
 
 import java.util.ArrayList;
 import java.util.List;
