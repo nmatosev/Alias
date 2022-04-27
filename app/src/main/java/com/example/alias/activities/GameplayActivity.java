@@ -12,6 +12,7 @@ import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.alias.entities.Role;
 import com.example.alias.utils.Constants;
 import com.example.alias.utils.DatabaseHelper;
 import com.example.alias.R;
@@ -75,8 +76,8 @@ public class GameplayActivity extends AppCompatActivity {
         tickSound = soundPool.load(this, R.raw.tick, 1);
         endSound = soundPool.load(this, R.raw.whistle, 1);
 
-        parseTestFile("res/raw/test.txt");
         words = parseFile(Constants.WORDS_PATH);
+        parseNounsFile(words);
 
         Log.d("Total word count", "Count: " + words.size());
 
@@ -106,6 +107,9 @@ public class GameplayActivity extends AppCompatActivity {
         Log.d("Teams present", " " + teams.entrySet());
 
         final Team team = teams.get(queue);
+        if (team == null) {
+            throw new NullPointerException("Team data invalid ot missing");
+        }
         player1 = team.getPlayer1();
         player2 = team.getPlayer2();
 
@@ -113,81 +117,76 @@ public class GameplayActivity extends AppCompatActivity {
 
         String totalScore = "Ukupno: " + team.getCurrentScore();
         scoreTotalTextView.setText(totalScore);
-        team.getRoundSummary().put(team.getRound(), new ArrayList<Answer>());
+        team.getRoundSummary().put(team.getRound(), new ArrayList<>());
 
         startButton = (Button) findViewById(R.id.button_start);
         countDownTextView = (TextView) findViewById(R.id.text_view_count_down);
-        startButton.setOnClickListener(new View.OnClickListener() {
+        startButton.setOnClickListener(v -> {
 
-            @Override
-            public void onClick(View v) {
+            wordTextView.setText(words.get(wordCounter));
+            startButton.setEnabled(false);
 
-                wordTextView.setText(words.get(wordCounter));
-                startButton.setEnabled(false);
+            correctButton.setOnClickListener(v1 -> {
+                String currentWord = words.get(wordCounter);
+                Answer answer = new Answer(currentWord, true);
+                Objects.requireNonNull(team.getRoundSummary().get(team.getRound())).add(answer);
 
-                correctButton.setOnClickListener(v1 -> {
-                    String currentWord = words.get(wordCounter);
-                    Answer answer = new Answer(currentWord, true);
-                    Objects.requireNonNull(team.getRoundSummary().get(team.getRound())).add(answer);
+                currentWord = words.get(wordCounter += 1);
+                wordTextView.setText(currentWord);
+                scoreCounter++;
+                soundPool.play(correctSound, 1, 1, 0, 0, 1);
 
-                    currentWord = words.get(wordCounter += 1);
-                    wordTextView.setText(currentWord);
-                    scoreCounter++;
-                    soundPool.play(correctSound, 1, 1, 0, 0, 1);
+                Log.i("Current score", "Score " + scoreCounter + " word cnt " + wordCounter);
+                String currentScoreMsg = "Trenutni rezultat: " + scoreCounter;
+                scoreTextView.setText(currentScoreMsg);
 
-                    Log.i("Current score", "Score " + scoreCounter + " word cnt " + wordCounter);
-                    String currentScoreMsg = "Trenutni rezultat: " + scoreCounter;
-                    scoreTextView.setText(currentScoreMsg);
+            });
 
-                });
+            passButton.setOnClickListener(v2 -> {
+                String currentWord = words.get(wordCounter);
+                Answer answer = new Answer(currentWord, false);
+                Objects.requireNonNull(team.getRoundSummary().get(team.getRound())).add(answer);
 
-                passButton.setOnClickListener(v2 -> {
-                    String currentWord = words.get(wordCounter);
-                    Answer answer = new Answer(currentWord, false);
-                    Objects.requireNonNull(team.getRoundSummary().get(team.getRound())).add(answer);
+                currentWord = words.get(wordCounter += 1);
+                wordTextView.setText(currentWord);
+                scoreCounter--;
+                soundPool.play(passSound, 1, 1, 0, 0, 1);
 
-                    currentWord = words.get(wordCounter += 1);
-                    wordTextView.setText(currentWord);
-                    scoreCounter--;
-                    soundPool.play(passSound, 1, 1, 0, 0, 1);
+                String currentScoreMsg = "Trenutni rezultat " + scoreCounter + " bodova";
+                scoreTextView.setText(currentScoreMsg);
 
-                    String currentScoreMsg = "Trenutni rezultat " + scoreCounter + " bodova";
-                    scoreTextView.setText(currentScoreMsg);
-
-                });
+            });
 
 
-                new CountDownTimer(roundDuration * 1000, 1000) {
-                    int counter = roundDuration;
+            new CountDownTimer(roundDuration * 1000, 1000) {
+                int counter = roundDuration;
 
-                    @Override
-                    public void onTick(long millisUntilFinished) {
-                        countDownTextView.setText(String.valueOf(counter));
-                        if (counter <= 10) {
-                            soundPool.play(tickSound, 1, 1, 0, 0, 1);
-                        }
-                        Log.d("Counter", "Ticks " + counter);
-                        counter--;
+                @Override
+                public void onTick(long millisUntilFinished) {
+                    countDownTextView.setText(String.valueOf(counter));
+                    if (counter <= 10) {
+                        soundPool.play(tickSound, 1, 1, 0, 0, 1);
                     }
+                    Log.d("Counter", "Ticks " + counter);
+                    counter--;
+                }
 
-                    @Override
-                    public void onFinish() {
-                        Team team = teams.get(queue);
-                        int total = team.getCurrentScore() + scoreCounter;
-                        team.setCurrentScore(total);
-                        countDownTextView.setText(Constants.ROUND_FINISHED);
-                        soundPool.play(endSound, 1, 1, 0, 0, 1);
-                        startActivity(new Intent(GameplayActivity.this, CurrentScoreActivity.class));
+                @Override
+                public void onFinish() {
+                    Team team1 = teams.get(queue);
+                    int total = team1.getCurrentScore() + scoreCounter;
+                    team1.setCurrentScore(total);
+                    countDownTextView.setText(Constants.ROUND_FINISHED);
+                    soundPool.play(endSound, 1, 1, 0, 0, 1);
+                    startActivity(new Intent(GameplayActivity.this, CurrentScoreActivity.class));
 
-                    }
-                }.start();
-            }
+                }
+            }.start();
         });
 
         toggleRole(player1);
         toggleRole(player2);
     }
-
 
 
     /**
@@ -199,27 +198,28 @@ public class GameplayActivity extends AppCompatActivity {
     private void setReaderGuesser(Player player1, Player player2) {
         String readerText;
         String guesserText;
-        if (player1.isReader()) {
+        if (player1.getRole().equals(Role.READER)) {
             readerText = Constants.READS + player1.getName();
-            guesserText = Constants.GUESS + player2.getName();
+            guesserText = Constants.GUESSES + player2.getName();
         } else {
             readerText = Constants.READS + player2.getName();
-            guesserText = Constants.GUESS + player1.getName();
+            guesserText = Constants.GUESSES + player1.getName();
         }
+
         readerTextView.setText(readerText);
         guesserTextView.setText(guesserText);
     }
 
     /**
-     * Toggles players role to reader/guesser.
+     * Toggles players role to reader/listener.
      *
      * @param player Player object representation
      */
     private void toggleRole(Player player) {
-        if (player.isReader()) {
-            player.setReader(false);
-        } else {
-            player.setReader(true);
+        if (player.getRole().equals(Role.READER)) {
+            player.setRole(Role.LISTENER);
+        } else if (player.getRole().equals(Role.LISTENER)) {
+            player.setRole(Role.READER);
         }
     }
 
@@ -234,6 +234,7 @@ public class GameplayActivity extends AppCompatActivity {
 
     /**
      * Parses test file in case there is any
+     *
      * @param fileName
      */
     private void parseTestFile(String fileName) {
@@ -251,6 +252,35 @@ public class GameplayActivity extends AppCompatActivity {
             e.printStackTrace();
         }
         Log.d("Alias words - tests", words.toString());
+
+    }
+
+    /**
+     * Parses nouns file in case there is any
+     */
+    private void parseNounsFile(List<String> words) {
+
+        InputStream in = this.getClass().getClassLoader().getResourceAsStream("res/raw/nouns.txt");
+        BufferedReader reader = new BufferedReader(new InputStreamReader(in));
+        String lineInFile;
+        try {
+            while ((lineInFile = reader.readLine()) != null) {
+                Log.d("line in noun file ", lineInFile);
+
+                String[] lineElements = lineInFile.split("\\s+");
+                if (lineElements.length > 3 && lineElements[0].startsWith("D")) {
+                    String clan = lineElements[0];
+                    if (!clan.toUpperCase().startsWith("D") && clan.length() != 3) {
+                        continue;
+                    }
+                    String translated = lineElements[3];
+                    words.add(translated);
+                }
+            }
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
 
     }
 
@@ -295,6 +325,7 @@ public class GameplayActivity extends AppCompatActivity {
 
     /**
      * Logs all duplicates
+     *
      * @param words
      * @param removedDuplicates
      */
@@ -304,9 +335,9 @@ public class GameplayActivity extends AppCompatActivity {
         final Set<String> duplicates = new HashSet<>();
         final Set<String> checkSet = new HashSet<>();
 
-        for(String word:words){
+        for (String word : words) {
             word = word.toLowerCase();
-            if(!checkSet.add(word)){
+            if (!checkSet.add(word)) {
                 duplicates.add(word);
             }
         }

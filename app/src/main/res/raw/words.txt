@@ -222,7 +222,8 @@ kocka, lopov, bunda, gumb, karika, kolutić, kip, soba, cipela, čipka, palačin
 korov, kopča, kečiga, lepinja, baršun, čizma, punđa, roštilj, sataraš, teret, stol,pandur, pajdaš, bitanga, mamlaz,barok, bijenale, kupola, terakota, burleska, akvarel, pastel,
 kvartet, kvintet, sonet, kantata, partitura, a cappella, pijanino, studio, kaseta/kazeta, kancona, primadona, mandolina, sopran,galanterija, roba, bagatela, neto, bruto,
 tramontana,barka, laguna, gondola, regata,mandarina, bevanda, bakalar, mortadela, gorgonzola, maraska,šugaman, ređipet, mudante, dolčevita,vaga, bista, tegla, šunka, cilj, šank,
-celer, plata, ruksak, ura, rentgen, kuplung, hauba, ratkapa, auspuh,štok,kifla,rajngla, beštek, šnita, krafna, puter, kifla, šlag, senf, supa, griz, šnicla, štrudla
+celer, plata, ruksak, ura, rentgen, kuplung, hauba, ratkapa, auspuh,štok,kifla,rajngla, beštek, šnita, krafna, puter, kifla, šlag, senf, supa, griz, šnicla, štrudla, Tommy, Konzum, Lidl,
+hospitaliziran,prošla godina,prošli tjedan,trenutak užasa, gruda snijega, sedam grijeha, nenadano, rafting, bušilica, vijak
 
 
 

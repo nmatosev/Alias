@@ -3,11 +3,11 @@ package com.example.alias.entities;
 public class Player {
 
     private String name;
-    private boolean isReader;
+    private Role role;
 
-    public Player(String name, boolean isReader) {
+    public Player(String name, Role role) {
         this.name = name;
-        this.isReader = isReader;
+        this.role = role;
     }
 
     public String getName() {
@@ -18,11 +18,11 @@ public class Player {
         this.name = name;
     }
 
-    public boolean isReader() {
-        return isReader;
+    public Role getRole() {
+        return role;
     }
 
-    public void setReader(boolean reader) {
-        isReader = reader;
+    public void setRole(Role role) {
+        this.role = role;
     }
 }

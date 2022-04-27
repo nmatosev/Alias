@@ -21,6 +21,7 @@ import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.alias.entities.Role;
 import com.example.alias.utils.DatabaseHelper;
 import com.example.alias.R;
 import com.example.alias.entities.CurrentGameEntity;
@@ -121,8 +122,8 @@ public class PairUpPlayersActivity extends AppCompatActivity {
                     playersAdapter.notifyDataSetChanged();
                     teamsAdapter.notifyDataSetChanged();
                     String teamName = joined.get(0) + "&" + joined.get(1);
-                    Player player1 = new Player(joined.get(0), true);
-                    Player player2 = new Player(joined.get(1), false);
+                    Player player1 = new Player(joined.get(0), Role.READER);
+                    Player player2 = new Player(joined.get(1), Role.LISTENER);
 
                     Team team = new Team(player1, player2, teamName);
                     int teamId = CurrentGameEntity.getInstance().getTeams().size();
@@ -165,8 +166,8 @@ public class PairUpPlayersActivity extends AppCompatActivity {
             int teamId = 0;
             while (table.moveToNext()) {
                 String teamName = table.getString(1) + "&" + table.getString(2);
-                Player player1 = new Player(table.getString(1), true);
-                Player player2 = new Player(table.getString(2), false);
+                Player player1 = new Player(table.getString(1), Role.READER);
+                Player player2 = new Player(table.getString(2), Role.LISTENER);
 
                 Team team = new Team(player1, player2, teamName);
 
