@@ -1,5 +1,6 @@
 package com.example.alias.activities;
 
+import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.media.SoundPool;
@@ -23,6 +24,8 @@ import com.example.alias.entities.Player;
 import com.example.alias.entities.Team;
 
 import java.io.BufferedReader;
+import java.io.FileOutputStream;
+import java.io.FileWriter;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
@@ -75,10 +78,7 @@ public class GameplayActivity extends AppCompatActivity {
         passSound = soundPool.load(this, R.raw.incorrect, 1);
         tickSound = soundPool.load(this, R.raw.tick, 1);
         endSound = soundPool.load(this, R.raw.whistle, 1);
-
         words = parseFile(Constants.WORDS_PATH);
-        parseNounsFile(words);
-
         Log.d("Total word count", "Count: " + words.size());
 
         SharedPreferences settingsPreferences = getSharedPreferences("settings_prefs", MODE_PRIVATE);
@@ -232,57 +232,6 @@ public class GameplayActivity extends AppCompatActivity {
     }
 
 
-    /**
-     * Parses test file in case there is any
-     *
-     * @param fileName
-     */
-    private void parseTestFile(String fileName) {
-
-        List<String> words = new ArrayList<>();
-        InputStream in = this.getClass().getClassLoader().getResourceAsStream(fileName);
-        BufferedReader reader = new BufferedReader(new InputStreamReader(in));
-        String lineInFile;
-        try {
-            while ((lineInFile = reader.readLine()) != null) {
-                Log.d("line in file ", lineInFile);
-                words.addAll(Arrays.asList(lineInFile.split(",")));
-            }
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-        Log.d("Alias words - tests", words.toString());
-
-    }
-
-    /**
-     * Parses nouns file in case there is any
-     */
-    private void parseNounsFile(List<String> words) {
-
-        InputStream in = this.getClass().getClassLoader().getResourceAsStream("res/raw/nouns.txt");
-        BufferedReader reader = new BufferedReader(new InputStreamReader(in));
-        String lineInFile;
-        try {
-            while ((lineInFile = reader.readLine()) != null) {
-                Log.d("line in noun file ", lineInFile);
-
-                String[] lineElements = lineInFile.split("\\s+");
-                if (lineElements.length > 3 && lineElements[0].startsWith("D")) {
-                    String clan = lineElements[0];
-                    if (!clan.toUpperCase().startsWith("D") && clan.length() != 3) {
-                        continue;
-                    }
-                    String translated = lineElements[3];
-                    words.add(translated);
-                }
-            }
-
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-
-    }
 
 
     /**
