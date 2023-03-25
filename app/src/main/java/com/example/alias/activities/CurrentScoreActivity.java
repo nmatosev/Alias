@@ -131,7 +131,7 @@ public class CurrentScoreActivity extends AppCompatActivity {
         List<Answer> summary;
 
         SummaryAdapter(Context c, List<Answer> summary) {
-            super(c, R.layout.summary_row, R.id.textView, summary);
+            super(c, R.layout.summary_row, R.id.player1_text_view, summary);
             this.context = c;
             this.summary = summary;
         }

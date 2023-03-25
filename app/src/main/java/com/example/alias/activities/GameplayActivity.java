@@ -7,6 +7,7 @@ import android.os.Bundle;
 import android.os.CountDownTimer;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
+import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -39,12 +40,14 @@ public class GameplayActivity extends AppCompatActivity {
     private SoundPool soundPool;
     int correctSound, passSound, tickSound, endSound;
 
+    CountDownTimer timer;
     Button correctButton;
     Button passButton;
 
     List<String> dictionary = new ArrayList<>();
 
     int roundDuration;
+    int resumeFrom;
     int scoreCounter = 0;
     int wordCounter = 0;
     int queue;
@@ -110,69 +113,100 @@ public class GameplayActivity extends AppCompatActivity {
         countDownTextView = (TextView) findViewById(R.id.text_view_count_down);
         startButton.setOnClickListener(v -> {
 
-            wordTextView.setText(dictionary.get(wordCounter));
-            startButton.setEnabled(false);
+            if (startButton.getText().equals("Start")) {
 
-            correctButton.setOnClickListener(v1 -> {
-                String currentWord = dictionary.get(wordCounter);
-                Answer answer = new Answer(currentWord, true);
-                Objects.requireNonNull(team.getRoundSummary().get(team.getRound())).add(answer);
+                wordTextView.setText(dictionary.get(wordCounter));
+                startButton.setText("Pauza");
 
-                currentWord = dictionary.get(wordCounter += 1);
-                wordTextView.setText(currentWord);
-                scoreCounter++;
-                soundPool.play(correctSound, 1, 1, 0, 0, 1);
+                correctButton.setOnClickListener(v1 -> {
+                    String currentWord = dictionary.get(wordCounter);
+                    Answer answer = new Answer(currentWord, true);
+                    Objects.requireNonNull(team.getRoundSummary().get(team.getRound())).add(answer);
 
-                Log.i("Current score", "Score " + scoreCounter + " word cnt " + wordCounter);
-                String currentScoreMsg = "Trenutni rezultat: " + scoreCounter;
-                scoreTextView.setText(currentScoreMsg);
+                    currentWord = dictionary.get(wordCounter += 1);
+                    wordTextView.setText(currentWord);
+                    scoreCounter++;
+                    soundPool.play(correctSound, 1, 1, 0, 0, 1);
 
-            });
+                    Log.i("Current score", "Score " + scoreCounter + " word cnt " + wordCounter);
+                    String currentScoreMsg = "Trenutni rezultat: " + scoreCounter;
+                    scoreTextView.setText(currentScoreMsg);
 
-            passButton.setOnClickListener(v2 -> {
-                String currentWord = dictionary.get(wordCounter);
-                Answer answer = new Answer(currentWord, false);
-                Objects.requireNonNull(team.getRoundSummary().get(team.getRound())).add(answer);
+                });
 
-                currentWord = dictionary.get(wordCounter += 1);
-                wordTextView.setText(currentWord);
-                scoreCounter--;
-                soundPool.play(passSound, 1, 1, 0, 0, 1);
+                passButton.setOnClickListener(v2 -> {
+                    String currentWord = dictionary.get(wordCounter);
+                    Answer answer = new Answer(currentWord, false);
+                    Objects.requireNonNull(team.getRoundSummary().get(team.getRound())).add(answer);
 
-                String currentScoreMsg = "Trenutni rezultat " + scoreCounter + " bodova";
-                scoreTextView.setText(currentScoreMsg);
+                    currentWord = dictionary.get(wordCounter += 1);
+                    wordTextView.setText(currentWord);
+                    scoreCounter--;
+                    soundPool.play(passSound, 1, 1, 0, 0, 1);
 
-            });
+                    String currentScoreMsg = "Trenutni rezultat " + scoreCounter + " bodova";
+                    scoreTextView.setText(currentScoreMsg);
 
-
-            new CountDownTimer(roundDuration * 1000, 1000) {
-                int counter = roundDuration;
-
-                @Override
-                public void onTick(long millisUntilFinished) {
-                    countDownTextView.setText(String.valueOf(counter));
-                    if (counter <= 10) {
-                        soundPool.play(tickSound, 1, 1, 0, 0, 1);
-                    }
-                    Log.d("Counter", "Ticks " + counter);
-                    counter--;
-                }
-
-                @Override
-                public void onFinish() {
-                    Team team1 = teams.get(queue);
-                    int total = team1.getCurrentScore() + scoreCounter;
-                    team1.setCurrentScore(total);
-                    countDownTextView.setText(Constants.ROUND_FINISHED);
-                    soundPool.play(endSound, 1, 1, 0, 0, 1);
-                    startActivity(new Intent(GameplayActivity.this, CurrentScoreActivity.class));
-
-                }
-            }.start();
+                });
+                timerStart(roundDuration);
+            } else if (startButton.getText().equals("Pauza")) {
+                startButton.setText("Nastavi");
+                timerPause();
+            } else if (startButton.getText().equals("Nastavi")) {
+                startButton.setText("Pauza");
+                timerResume();
+            }
         });
 
         toggleRole(player1);
         toggleRole(player2);
+    }
+
+    private void timerStart(int roundDuration) {
+        timer = new CountDownTimer(roundDuration * 1000, 1000) {
+            int counter = roundDuration;
+
+            @Override
+            public void onTick(long millisUntilFinished) {
+                countDownTextView.setText(String.valueOf(counter));
+                if (counter <= 10) {
+                    soundPool.play(tickSound, 1, 1, 0, 0, 1);
+                }
+                Log.d("Counter", "Ticks " + counter);
+                counter--;
+                resumeFrom = counter;
+            }
+
+            @Override
+            public void onFinish() {
+                Team team1 = CurrentGameEntity.getInstance().getTeams().get(queue);
+                if (team1 == null) {
+                    throw new RuntimeException("Null pointer exception");
+                }
+
+                int total = team1.getCurrentScore() + scoreCounter;
+                team1.setCurrentScore(total);
+                countDownTextView.setText(Constants.ROUND_FINISHED);
+                soundPool.play(endSound, 1, 1, 0, 0, 1);
+                startActivity(new Intent(GameplayActivity.this, CurrentScoreActivity.class));
+
+            }
+
+        };
+        timer.start();
+    }
+
+    public void timerPause() {
+        correctButton.setEnabled(false);
+        passButton.setEnabled(false);
+        timer.cancel();
+    }
+
+    private void timerResume() {
+        Log.i("Resume from: ", Long.toString(resumeFrom));
+        correctButton.setEnabled(true);
+        passButton.setEnabled(true);
+        timerStart(resumeFrom);
     }
 
 

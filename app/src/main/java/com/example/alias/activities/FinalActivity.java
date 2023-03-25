@@ -47,7 +47,7 @@ public class FinalActivity extends AppCompatActivity {
         List<Team> pairs;
 
         TeamsSummaryAdapter(Context c, List<Team> pairs) {
-            super(c, R.layout.pairs_row, R.id.textView, pairs);
+            super(c, R.layout.pairs_row, R.id.player1_text_view, pairs);
             this.context = c;
             this.pairs = pairs;
         }

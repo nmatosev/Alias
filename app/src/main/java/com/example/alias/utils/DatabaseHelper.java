@@ -74,7 +74,6 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         Log.d("Deleted Log", "Deleted " + name);
         SQLiteDatabase db = this.getWritableDatabase();
         return db.delete(PLAYERS_TABLE, COL_2 + "=" + name, null) > 0;
-
     }
 
     public boolean deleteTeams(String pair) {
@@ -86,9 +85,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         SQLiteDatabase db = this.getWritableDatabase();
         Log.i("team table ", getTableAsString(db, TEAMS_TABLE));
 
-
         return db.delete(TEAMS_TABLE, "PLAYER1='" + player1 + "' AND PLAYER2='" + player2 + "'", null) > 0;
-
     }
 
     public Cursor getPlayers() {

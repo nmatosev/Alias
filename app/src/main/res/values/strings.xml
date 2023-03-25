@@ -20,7 +20,8 @@
     <string name="pass">Dalje</string>
 
     <!--Pop up window -->
-    <string name="player">Igrač:</string>
+    <string name="player1">Igrač 1:</string>
+    <string name="player2">Igrač 2:</string>
     <string name="insert_name">Upiši ime</string>
     <string name="save">Spremi</string>
 
@@ -36,6 +37,8 @@
     </string>
     <string name="game_summary">Rezultat:</string>
     <string name="main_menu">Glavni meni</string>
+    <string name="start_game">Započni igru</string>
+    <string name="add_team">Dodaj tim</string>
 
 
 </resources>

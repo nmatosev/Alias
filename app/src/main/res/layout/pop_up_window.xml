@@ -13,17 +13,35 @@
         android:orientation="vertical">
 
         <TextView
-            android:id="@+id/textView"
+            android:id="@+id/player1_text_view"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textColor="#000"
             android:textStyle="bold"
             android:layout_margin="15dp"
             android:textSize="20sp"
-            android:text="@string/player"/>
+            android:text="@string/player1"/>
 
         <EditText
             android:id="@+id/first_player_edit_text"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:ems="10"
+            android:hint="@string/insert_name"
+            android:inputType="textPersonName" />
+
+        <TextView
+            android:id="@+id/player2_text_view"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="#000"
+            android:textStyle="bold"
+            android:layout_margin="15dp"
+            android:textSize="20sp"
+            android:text="@string/player2"/>
+
+        <EditText
+            android:id="@+id/second_player_edit_text"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:ems="10"

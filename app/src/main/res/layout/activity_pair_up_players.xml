@@ -16,23 +16,15 @@
             android:layout_height="wrap_content"
             android:layout_margin="10dp"
             android:background="@drawable/basic_button"
-            android:text="Započni igru" />
+            android:text="@string/start_game" />
 
         <Button
-            android:id="@+id/create_new_player_button"
+            android:id="@+id/create_new_team_button"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_margin="10dp"
             android:background="@drawable/basic_button"
-            android:text="Dodaj igrača" />
-
-        <Button
-            android:id="@+id/pair_players_button"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_margin="10dp"
-            android:background="@drawable/basic_button"
-            android:text="Upari igrače" />
+            android:text="@string/add_team" />
 
         <TextView
             android:id="@+id/text_view_pairs"
