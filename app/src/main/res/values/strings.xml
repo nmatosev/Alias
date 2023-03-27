@@ -28,7 +28,7 @@
     <!--Setting activity-->
     <string name="round_duration">Trajanje runde</string>
     <string name="score_to_win">Bodova za pobjedu</string>
-    <string name="default_round_duration">10</string>
+    <string name="default_round_duration">60</string>
     <string name="default_score_to_win">30</string>
 
     <!--Rules activity-->

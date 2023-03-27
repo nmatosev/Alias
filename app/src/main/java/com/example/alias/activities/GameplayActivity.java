@@ -39,6 +39,9 @@ public class GameplayActivity extends AppCompatActivity {
     TextView scoreTotalTextView;
     private SoundPool soundPool;
     int correctSound, passSound, tickSound, endSound;
+    String start = "Start";
+    String pause = "Pauza";
+    String resume = "Nastavi";
 
     CountDownTimer timer;
     Button correctButton;
@@ -69,7 +72,7 @@ public class GameplayActivity extends AppCompatActivity {
         tickSound = soundPool.load(this, R.raw.tick, 1);
         endSound = soundPool.load(this, R.raw.whistle, 1);
         dictionary = Utilities.getDictionary();
-        Log.d("Total word count", "Count: " + dictionary.size());
+        Log.d("Total phrases count", "Count: " + dictionary.size());
 
         SharedPreferences settingsPreferences = getSharedPreferences("settings_prefs", MODE_PRIVATE);
         SharedPreferences.Editor editor = getSharedPreferences("score_prefs", MODE_PRIVATE).edit();
@@ -94,7 +97,7 @@ public class GameplayActivity extends AppCompatActivity {
         Player player1;
         Player player2;
 
-        Log.d("Teams present", " " + teams.entrySet());
+        Log.d("Teams ", " " + teams.entrySet());
 
         final Team team = teams.get(queue);
         if (team == null) {
@@ -113,10 +116,12 @@ public class GameplayActivity extends AppCompatActivity {
         countDownTextView = (TextView) findViewById(R.id.text_view_count_down);
         startButton.setOnClickListener(v -> {
 
-            if (startButton.getText().equals("Start")) {
+            if (startButton.getText().equals(start)) {
 
                 wordTextView.setText(dictionary.get(wordCounter));
-                startButton.setText("Pauza");
+                startButton.setText(pause);
+                correctButton.setEnabled(true);
+                passButton.setEnabled(true);
 
                 correctButton.setOnClickListener(v1 -> {
                     String currentWord = dictionary.get(wordCounter);
@@ -128,8 +133,7 @@ public class GameplayActivity extends AppCompatActivity {
                     scoreCounter++;
                     soundPool.play(correctSound, 1, 1, 0, 0, 1);
 
-                    Log.i("Current score", "Score " + scoreCounter + " word cnt " + wordCounter);
-                    String currentScoreMsg = "Trenutni rezultat: " + scoreCounter;
+                    String currentScoreMsg = "Trenutni rezultat: " + scoreCounter + " bodova";
                     scoreTextView.setText(currentScoreMsg);
 
                 });
@@ -149,11 +153,11 @@ public class GameplayActivity extends AppCompatActivity {
 
                 });
                 timerStart(roundDuration);
-            } else if (startButton.getText().equals("Pauza")) {
-                startButton.setText("Nastavi");
+            } else if (startButton.getText().equals(pause)) {
+                startButton.setText(resume);
                 timerPause();
-            } else if (startButton.getText().equals("Nastavi")) {
-                startButton.setText("Pauza");
+            } else if (startButton.getText().equals(resume)) {
+                startButton.setText(pause);
                 timerResume();
             }
         });

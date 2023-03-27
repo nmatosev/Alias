@@ -3,6 +3,7 @@ package com.example.alias.activities;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.database.Cursor;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -15,7 +16,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
-import android.widget.CheckBox;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
@@ -37,6 +38,10 @@ public class PairUpPlayersActivity extends AppCompatActivity {
     DatabaseHelper databaseHelper;
     ImageView trashIcon;
     ArrayList<String> teamsList = new ArrayList<>();
+    EditText roundDurationEditText;
+    EditText scoreToWinEditText;
+    int roundDuration = 60;
+    int scoreToWin = 30;
 
     TeamsAdapter teamsAdapter;
     TextView textViewPairs;
@@ -46,13 +51,13 @@ public class PairUpPlayersActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_pair_up_players);
 
+        roundDurationEditText = (EditText) findViewById(R.id.round_duration_edit_text);
+        scoreToWinEditText = (EditText) findViewById(R.id.score_to_win_edit_text);
+
         databaseHelper = new DatabaseHelper(this);
         Cursor teamsTable = databaseHelper.getTeams();
 
         fillTeamList(teamsTable, teamsList);
-
-        Log.d("show db", databaseHelper.getPlayers().toString());
-        Log.d("teams ", teamsList.toString());
 
         final ListView teamsListView = (ListView) findViewById(R.id.teams_list_view);
 
@@ -61,29 +66,49 @@ public class PairUpPlayersActivity extends AppCompatActivity {
 
         Button createNewTeam = findViewById(R.id.create_new_team_button);
 
-        createNewTeam.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                startActivity(new Intent(PairUpPlayersActivity.this, PopUpActivity.class));
-                teamsAdapter.notifyDataSetChanged();
-            }
+        createNewTeam.setOnClickListener(v -> {
+            startActivity(new Intent(PairUpPlayersActivity.this, PopUpActivity.class));
+            teamsAdapter.notifyDataSetChanged();
         });
-
 
         startGameButton = (Button) findViewById(R.id.start_game);
-        startGameButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                teamsAdapter.notifyDataSetChanged();
-                Log.d("Teams available ", " " + teamsTable.getCount());
-                if (teamsAdapter.pairs.isEmpty()) {
-                    showToastMsg("Please create at least one team.");
-                    return;
-                }
-                startActivity(new Intent(PairUpPlayersActivity.this, GameplayActivity.class));
+        startGameButton.setOnClickListener(v -> {
+            if (!settingsValidated()) {
+                return;
             }
+
+            teamsAdapter.notifyDataSetChanged();
+            Log.d("Teams available ", " " + teamsTable.getCount());
+            if (teamsAdapter.pairs.isEmpty()) {
+                showToastMsg("Please create at least one team.");
+                return;
+            }
+            startActivity(new Intent(PairUpPlayersActivity.this, GameplayActivity.class));
         });
 
+    }
+
+    private boolean settingsValidated() {
+
+        roundDuration = Integer.parseInt(roundDurationEditText.getText().toString());
+        scoreToWin = Integer.parseInt(scoreToWinEditText.getText().toString());
+
+        Log.i("Score to win", " " + scoreToWin);
+        Log.i("Round duration", " " + roundDuration);
+        if (roundDuration > 300 || roundDuration < 10) {
+            showToastMsg("Trajanje runde mora biti od 10 sekundi do 5 minuta.");
+            return false;
+        }
+        if (scoreToWin > 300 || scoreToWin < 10) {
+            showToastMsg("Bodovi za pobjedu moraju biti od 10 do 300.");
+            return false;
+        }
+
+        SharedPreferences.Editor editor = getSharedPreferences("settings_prefs", MODE_PRIVATE).edit();
+        editor.putInt("roundDuration", roundDuration);
+        editor.putInt("scoreToWin", scoreToWin);
+        editor.apply();
+        return true;
     }
 
 
@@ -110,7 +135,7 @@ public class PairUpPlayersActivity extends AppCompatActivity {
     /**
      * Shows toast message received as an argument.
      *
-     * @param message
+     * @param message to show
      */
     private void showToastMsg(String message) {
         Toast.makeText(this, message, Toast.LENGTH_SHORT).show();
@@ -119,12 +144,16 @@ public class PairUpPlayersActivity extends AppCompatActivity {
     class TeamsAdapter extends ArrayAdapter<String> {
 
         Context context;
-        List<String> pairs;
+        private List<String> pairs;
 
         TeamsAdapter(Context c, List<String> pairs) {
             super(c, R.layout.pairs_row, R.id.player1_text_view, pairs);
             this.context = c;
             this.pairs = pairs;
+        }
+
+        public List<String> getPairs() {
+            return pairs;
         }
 
         @NonNull

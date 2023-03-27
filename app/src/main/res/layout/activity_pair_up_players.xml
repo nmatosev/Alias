@@ -33,12 +33,54 @@
             android:layout_height="wrap_content"
             android:text="" />
 
-        <ListView
-            android:id="@+id/players_list_view"
+        <LinearLayout
+            xmlns:android="http://schemas.android.com/apk/res/android"
+            xmlns:app="http://schemas.android.com/apk/res-auto"
+            xmlns:tools="http://schemas.android.com/tools"
             android:layout_width="match_parent"
-            android:layout_height="266dp"
-            android:layout_marginHorizontal="15dp">
-        </ListView>
+            android:layout_height="match_parent"
+            tools:context=".activities.SettingsActivity"
+            android:orientation="vertical"
+            >
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/round_duration"
+                android:textColor="#000"
+                android:textStyle="bold"
+                android:layout_margin="15dp"
+                android:textSize="20sp"
+                android:id="@+id/round_duration"/>
+
+            <EditText
+                android:id="@+id/round_duration_edit_text"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:ems="10"
+                android:layout_margin="15dp"
+                android:inputType="number"
+                android:text="@string/default_round_duration" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/score_to_win"
+                android:textColor="#000"
+                android:textStyle="bold"
+                android:layout_margin="15dp"
+                android:textSize="20sp"
+                android:id="@+id/default_activity_button"/>
+
+            <EditText
+                android:id="@+id/score_to_win_edit_text"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:ems="10"
+                android:layout_margin="15dp"
+                android:inputType="number"
+                android:text="@string/default_score_to_win" />
+
+        </LinearLayout>
 
         <ListView
             android:id="@+id/teams_list_view"

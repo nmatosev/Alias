@@ -44,7 +44,6 @@ public class SettingsActivity extends AppCompatActivity {
                 Log.i("score", "" + scoreToWin);
                 Log.i("dur", "" + roundDuration);
                 if (roundDuration > 300 || scoreToWin > 300 || roundDuration < 10 || scoreToWin < 10) {
-
                     showToastMsg("Trajanje runde mora biti manje od 10 sekundi do 5 minuta i bodovi za pobjedu moraju biti od 10 do 300.");
                 } else {
                     showToastMsg("Promjene spremljene!");
