@@ -101,7 +101,7 @@ public class GameplayActivity extends AppCompatActivity {
 
         final Team team = teams.get(queue);
         if (team == null) {
-            throw new NullPointerException("Team data invalid ot missing");
+            throw new NullPointerException("Team data invalid or missing!");
         }
         player1 = team.getPlayer1();
         player2 = team.getPlayer2();

@@ -48,9 +48,9 @@ public class Utilities {
     }
 
     /**
-     * Gets words from storage and prepares them for app (removes duplicates, empty strings, trims strings)
+     * Gets dictionary_cro from storage and prepares them for app (removes duplicates, empty strings, trims strings)
      *
-     * @return list of words
+     * @return list of dictionary_cro
      */
     public static List<String> prepareWords(List<String> words) {
         //trims and removes empty strings
@@ -63,12 +63,18 @@ public class Utilities {
         words.clear();
         words.addAll(removedDuplicates);
         Collections.shuffle(words);
+        //temp just to track suspicious terms
+        /*for (String word: words) {
+            if (word.split("\\s+").length > 2) {
+                System.out.println(word);
+            }
+        }*/
         return words;
     }
 
 
     /**
-     * Parses file where words are stored.
+     * Parses file where dictionary_cro are stored.
      *
      * @return source file where questions are stored.
      */
